@@ -8,6 +8,7 @@ enum Attribute
 	Water,
 	Earth,
 	Wind,
+	Max,
 };
 
 class Monster
@@ -27,10 +28,15 @@ private:
 
 public:
 	void Set_Name(const char* InName);
+	void Set_Attribute(Attribute InAttribute);
+	void Set_Attribute(int InNumber);
 
 public:
 	char* Get_Name() { return Name; }
 	float Get_Lifepoint() { return Lifepoint; }
+	float Get_Attack() { return Attack; }
+	float Get_Defense() { return Defense; }
+	Attribute Get_Atrribute() { return atrribute; }
 
 public:
 	bool Query_IsAlive() { return Lifepoint > 0.f; }
@@ -38,4 +44,8 @@ public:
 public:
 	void SendDamage(Monster* InTarget);
 	void TakeDamage(float InDamagePoint);
+
+private:
+	float CalculateDamage(Monster* InTarget);
+	float CalculateAtrribute(Attribute InMyAtrribute, Attribute InTargetAtrribute);
 };

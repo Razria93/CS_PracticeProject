@@ -9,6 +9,9 @@ int main()
 	monster0->Set_Name("MONSTER0");
 	monster1->Set_Name("MONSTER1");
 
+	monster0->Set_Attribute(Attribute::Fire);
+	monster1->Set_Attribute(Attribute::Water);
+
 	printf("monster0.Name: %s\n", monster0->Get_Name());
 	printf("monster0.Lifepoint: %f\n", monster0->Get_Lifepoint());
 	
