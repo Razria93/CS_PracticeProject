@@ -3,21 +3,26 @@
 
 Monster::Monster()
 {
-	initialize();
 }
 
-void Monster::initialize()
+void Monster::initialize(StatusData InStatusData)
 {
-	Lifepoint = 50.f;
-	Attack = 10.f;
-	Defense = 5.f;
+	Set_Name(InStatusData.Name, InStatusData.NameSize);
+	Set_Lifepoint(InStatusData.Lifepoint);
+	Set_Attack(InStatusData.Attack);
+	Set_Defense(InStatusData.Defense);
+	Set_Attribute(InStatusData.Atrribute);
 }
 
-void Monster::Set_Name(const char* InName, unsigned long long InSize)
+void Monster::Set_Name(const char* InName, int InSize)
 {
 	if (InSize > MAX_NAME_LENGTH - 1)
 	{
+		M_StatusData.Name[0] = '\0';
+
 		printf("InName Length is too long (max: %d)\n", MAX_NAME_LENGTH - 1);
+		printf("NameSize: %d\n", InSize);
+
 		return;
 	}
 
@@ -25,34 +30,35 @@ void Monster::Set_Name(const char* InName, unsigned long long InSize)
 
 	for (i = 0; i < InSize; i++)
 	{
-		Name[i] = InName[i];
+		M_StatusData.Name[i] = InName[i];
 		// printf("InName(%d): %c\n",i, InName[i]);
 	}
 
 	if (i <= MAX_NAME_LENGTH)
-		Name[i] = '\0';
+		M_StatusData.Name[i] = '\0';
 
 	// printf("Name:%s\n", Name);
+	// printf("NameSize: %d\n", InSize);
 }
 
 void Monster::Set_Lifepoint(float InLifepoint)
 {
-	Lifepoint = InLifepoint;
+	M_StatusData.Lifepoint = InLifepoint;
 }
 
 void Monster::Set_Attack(float InAttack)
 {
-	Attack = InAttack;
+	M_StatusData.Attack = InAttack;
 }
 
 void Monster::Set_Defense(float InDefense)
 {
-	Defense = InDefense;
+	M_StatusData.Defense = InDefense;
 }
 
 void Monster::Set_Attribute(Attribute InAttribute)
 {
-	atrribute = InAttribute;
+	M_StatusData.Atrribute = InAttribute;
 }
 
 void Monster::Set_Attribute(int InNumber)
@@ -62,7 +68,7 @@ void Monster::Set_Attribute(int InNumber)
 		printf("InNumber is not Mapping to Attribute\n");
 	}
 
-	atrribute = (Attribute)InNumber;
+	M_StatusData.Atrribute = (Attribute)InNumber;
 }
 
 void Monster::SendDamage(Monster* InTarget)
@@ -78,21 +84,33 @@ void Monster::SendDamage(Monster* InTarget)
 
 void Monster::TakeDamage(float InDamagePoint)
 {
-	if (Lifepoint < 0.f)
+	if (M_StatusData.Lifepoint < 0.f)
 	{
 		printf("Not Enoungh LifePoint\n");
 		return;
 	}
 
-	Lifepoint -= InDamagePoint;
+	M_StatusData.Lifepoint -= InDamagePoint;
 
-	if (Lifepoint < 0.f)
+	if (M_StatusData.Lifepoint < 0.f)
 	{
-		Lifepoint = 0.f;
+		M_StatusData.Lifepoint = 0.f;
 
 		printf("LifePoint is zero\n");
 		return;
 	}
+}
+
+void Monster::PrintStatusData()
+{
+	printf("---\n");
+	printf("%-10s: %s\n", "Name", M_StatusData.Name);
+	printf("%-10s: %.1f\n", "Lifepoint", M_StatusData.Lifepoint);
+	printf("%-10s: %.1f\n", "Attack", M_StatusData.Attack);
+	printf("%-10s: %.1f\n", "Defense", M_StatusData.Defense);
+	printf("%-10s: %d\n", "Atrribute", M_StatusData.Atrribute);
+	printf("0: Fire / 1: Water / 2: Earth / 3: Wind\n");
+	printf("---\n");
 }
 
 float Monster::CalculateDamage(Monster* InTarget)
@@ -104,10 +122,10 @@ float Monster::CalculateDamage(Monster* InTarget)
 	}
 
 	// BasicDamage
-	float damage = this->Attack - InTarget->Get_Defense();
+	float damage = this->M_StatusData.Attack - InTarget->Get_Defense();
 
 	// Attribute
-	damage *= CalculateAtrribute(this->atrribute, InTarget->Get_Atrribute());
+	damage *= CalculateAtrribute(this->M_StatusData.Atrribute, InTarget->Get_Atrribute());
 
 	// Truncate
 	damage = floor(damage);

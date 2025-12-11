@@ -5,19 +5,27 @@ int main()
 {
 	Monster* monster0 = new Monster;
 	Monster* monster1 = new Monster;
-	
-	monster0->Set_Name("MONSTER0", sizeof("MONSTER0"));
-	monster1->Set_Name("MONSTER1", sizeof("MONSTER1"));
+	Monster* monster2 = new Monster;
 
-	monster0->Set_Attribute(Attribute::Fire);
-	monster1->Set_Attribute(Attribute::Water);
+	StatusData status0 = StatusData{ "MONSTER0", sizeof("MONSTER0"),100.f, 15.f, 5.f, Attribute::Earth};
+	StatusData status1 = StatusData{ "MONSTER1", sizeof("MONSTER1"), 50.f, 30.f, 10.f, Attribute::Water };
+	StatusData status2 = StatusData{ "MONSTER2", sizeof("MONSTER2"), 80.f, 20.f, 5.f, Attribute::Fire };
 
-	printf("monster0.Name: %s\n", monster0->Get_Name());
-	printf("monster0.Lifepoint: %f\n", monster0->Get_Lifepoint());
+	monster0->initialize(status0);
+	monster1->initialize(status1);
+	monster2->initialize(status2);
+
+	printf("\n======================\n");
+	printf("\nStatus\n");
+	printf("\n======================\n");
 	
-	printf("monster1.Name: %s\n", monster1->Get_Name());
-	printf("monster1.Lifepoint: %f\n", monster1->Get_Lifepoint());
-	printf("---\n");
+	monster0->PrintStatusData();
+	monster1->PrintStatusData();
+	monster2->PrintStatusData();
+
+	printf("\n======================\n");
+	printf("\nBattlePhase\n");
+	printf("\n======================\n");
 
 	while (true)
 	{

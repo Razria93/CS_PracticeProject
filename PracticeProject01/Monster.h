@@ -11,23 +11,29 @@ enum Attribute
 	Max,
 };
 
+struct StatusData
+{
+	char  Name[MAX_NAME_LENGTH];
+	int   NameSize;
+	float Lifepoint;
+	float Attack;
+	float Defense;
+	Attribute Atrribute;
+};
+
 class Monster
 {
 public:
 	Monster();
 
 private:
-	char  Name[MAX_NAME_LENGTH];
-	float Lifepoint;
-	float Attack;
-	float Defense;
-	Attribute atrribute;
-
-private:
-	void initialize();
+	StatusData M_StatusData;
 
 public:
-	void Set_Name(const char* InName, unsigned long long InSize);
+	void initialize(StatusData InStatus);
+
+public:
+	void Set_Name(const char* InName, int InSize);
 	void Set_Lifepoint(float InLifepoint);
 	void Set_Attack(float InAttack);
 	void Set_Defense(float InDefense);
@@ -35,18 +41,19 @@ public:
 	void Set_Attribute(int InNumber);
 
 public:
-	char* Get_Name() { return Name; }
-	float Get_Lifepoint() { return Lifepoint; }
-	float Get_Attack() { return Attack; }
-	float Get_Defense() { return Defense; }
-	Attribute Get_Atrribute() { return atrribute; }
+	char* Get_Name() { return M_StatusData.Name; }
+	float Get_Lifepoint() { return M_StatusData.Lifepoint; }
+	float Get_Attack() { return M_StatusData.Attack; }
+	float Get_Defense() { return M_StatusData.Defense; }
+	Attribute Get_Atrribute() { return M_StatusData.Atrribute; }
 
 public:
-	bool Query_IsAlive() { return Lifepoint > 0.f; }
+	bool Query_IsAlive() { return M_StatusData.Lifepoint > 0.f; }
 
 public:
 	void SendDamage(Monster* InTarget);
 	void TakeDamage(float InDamagePoint);
+	void PrintStatusData();
 
 private:
 	float CalculateDamage(Monster* InTarget);
