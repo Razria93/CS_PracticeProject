@@ -103,14 +103,14 @@ void Monster::TakeDamage(float InDamagePoint)
 
 void Monster::PrintStatusData()
 {
-	printf("---\n");
+	printf("----------------\n");
 	printf("%-10s: %s\n", "Name", M_StatusData.Name);
 	printf("%-10s: %.1f\n", "Lifepoint", M_StatusData.Lifepoint);
 	printf("%-10s: %.1f\n", "Attack", M_StatusData.Attack);
 	printf("%-10s: %.1f\n", "Defense", M_StatusData.Defense);
 	printf("%-10s: %d\n", "Atrribute", M_StatusData.Atrribute);
 	printf("0: Fire / 1: Water / 2: Earth / 3: Wind\n");
-	printf("---\n");
+	printf("----------------\n");
 }
 
 float Monster::CalculateDamage(Monster* InTarget)
