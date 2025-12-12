@@ -16,9 +16,11 @@ void Arena::Initialize(int InContainerSize)
 {
 	printf("=Initialize=====\n");
 
+	bIsEndGame = false;
+
 	ContainerStart = new Unit[InContainerSize];
 	ContainerValidIndices = new int[InContainerSize];
-	
+
 	ContainerSize = InContainerSize;
 	ContainerCount = 0;
 
@@ -69,7 +71,7 @@ void Arena::Add_Monster(StatusData InStatusData)
 			temp->Unit_Index = i;
 
 			Add_ValidIndex(i);
-			
+
 			printf("-Add_Units------\n");
 			temp->Unit_Monster->Print_Name();
 			printf("i: %d\n", i);
@@ -89,7 +91,7 @@ void Arena::Delete_Monster(int InUnitIndex)
 {
 	printf("=Delete_Monster=\n");
 
-	Unit* temp = Find_Monster_ByUnitNum(InUnitIndex);
+	Unit* temp = Find_Monster(InUnitIndex);
 
 	printf("-Before_Delete_Units-\n");
 	temp->Unit_Monster->Print_Name();
@@ -111,6 +113,76 @@ void Arena::Delete_Monster(int InUnitIndex)
 	printf("Unit_MonsterPointer: %p\n", temp->Unit_Monster);
 	printf("Unit_Number: %d\n", temp->Unit_Index);
 	printf("---------------------\n");
+}
+
+void Arena::GoToAround()
+{
+	if (bIsEndGame) return;
+
+	printf("=GoToAround=====\n");
+
+	if (!Check_Container_IsValid())
+		return;
+
+	for (int i = 0; i < ContainerCount; i++)
+	{
+		int idx;
+
+		if (i == ContainerCount - 1)
+		{
+			idx = 0;
+		}
+		else
+		{
+			idx = i + 1;
+		}
+
+		int selfIndex = ContainerValidIndices[i];
+		int targetindex = ContainerValidIndices[idx];
+
+
+
+		// printf("i: %d\n", i);
+		// printf("selfIndex: %d\n", selfIndex);
+		// 
+		// printf("i: %d\n", i + 1);
+		// printf("targetindex: %d\n", targetindex);
+
+		Unit* selfIUnitPtr = Find_Monster(selfIndex);
+		Unit* targetUnitPtr = Find_Monster(targetindex);
+
+		if (selfIUnitPtr == nullptr || targetUnitPtr == nullptr)
+			continue;
+
+		// selfIUnitPtr->Unit_Monster->Print_Name();
+		// targetUnitPtr->Unit_Monster->Print_Name();
+
+		if (selfIndex == targetindex)
+		{
+			bIsEndGame = true;
+
+			printf("\n==MissionComplete==\n");
+			printf("\nWinner: %s\n", selfIUnitPtr->Unit_Monster->Get_Name());
+			printf("\n===================\n");
+			break;
+		}
+
+		selfIUnitPtr->Unit_Monster->Send_Damage(targetUnitPtr->Unit_Monster);
+		printf("\n");
+
+		if (!Check_Monster_IsAlive(targetindex))
+		{
+			Delete_Monster(targetindex);
+		}
+	}
+}
+
+void Arena::StartGame()
+{
+	while (!bIsEndGame)
+	{
+		GoToAround();
+	}
 }
 
 void Arena::Print_ContainerCount()
@@ -164,7 +236,7 @@ void Arena::Print_Monster_StatusData(const char* InName, uint64_t InSize)
 	if (!Check_Container_IsValid())
 		return;
 
-	Unit* temp = Find_Monster_ByUnitName(InName, InSize);
+	Unit* temp = Find_Monster(InName, InSize);
 
 	if (temp != nullptr)
 	{
@@ -211,7 +283,7 @@ void Arena::Delete_ValidIndex(int InUnitIndex)
 	ContainerCount = tempcount;
 }
 
-Unit* Arena::Find_Monster_ByUnitNum(int InUnitIndex)
+Unit* Arena::Find_Monster(int InUnitIndex)
 {
 	if (!Check_Container_IsValid())
 		return nullptr;
@@ -227,7 +299,7 @@ Unit* Arena::Find_Monster_ByUnitNum(int InUnitIndex)
 	return nullptr;
 }
 
-Unit* Arena::Find_Monster_ByUnitName(const char* InName, uint64_t InSize)
+Unit* Arena::Find_Monster(const char* InName, uint64_t InSize)
 {
 	if (!Check_Container_IsValid())
 		return nullptr;
@@ -245,5 +317,23 @@ Unit* Arena::Find_Monster_ByUnitName(const char* InName, uint64_t InSize)
 
 bool Arena::Check_Container_IsValid()
 {
-	return ContainerCount != 0 && ContainerStart != nullptr && ContainerSize > 0 ? true : false;
+	return ContainerStart != nullptr && ContainerSize > 0 && ContainerValidIndices != nullptr && ContainerCount != 0 ? true : false;
+}
+
+bool Arena::Check_Monster_IsAlive(int InUnitIndex)
+{
+	Unit* unitPtr = Find_Monster(InUnitIndex);
+
+	if (!unitPtr) return false;
+
+	return unitPtr->Unit_Monster->Get_HealthPoint() > 0.f ? true : false;
+}
+
+bool Arena::Check_Monster_IsAlive(const char* InName, uint64_t InSize)
+{
+	Unit* unitPtr = Find_Monster(InName, InSize);
+
+	if (!unitPtr) return false;
+
+	return unitPtr->Unit_Monster->Get_HealthPoint() > 0.f ? true : false;
 }

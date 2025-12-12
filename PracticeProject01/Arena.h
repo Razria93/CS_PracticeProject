@@ -16,6 +16,7 @@ private:
 	// Container
 	Unit* ContainerStart;
 	int* ContainerValidIndices;
+	bool bIsEndGame;
 
 public:
 	void Initialize(int InContainerSize);
@@ -23,6 +24,10 @@ public:
 public:
 	void Add_Monster(StatusData InStatusData);
 	void Delete_Monster(int InUnitIndex);
+
+public:
+	void GoToAround();
+	void StartGame();
 
 public:
 	void Print_ContainerCount();
@@ -34,9 +39,11 @@ private:
 	void Delete_ValidIndex(int InUnitIndex);
 
 private:
-	Unit* Find_Monster_ByUnitNum(int InUnitIndex);
-	Unit* Find_Monster_ByUnitName(const char* InName, uint64_t InSize);
+	Unit* Find_Monster(int InUnitIndex);
+	Unit* Find_Monster(const char* InName, uint64_t InSize);
 
 private:
 	bool Check_Container_IsValid();
+	bool Check_Monster_IsAlive(int InUnitIndex);
+	bool Check_Monster_IsAlive(const char* InName, uint64_t InSize);
 }; 

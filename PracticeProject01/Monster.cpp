@@ -104,21 +104,28 @@ void Monster::Send_Damage(Monster* InTarget)
 		printf("InTarget is Invalid\n");
 		return;
 	}
-
+	printf("Send: %s / Take: %s\n", Get_Name(), InTarget->Get_Name());
+	
 	InTarget->Take_Damage(CalculateDamage(InTarget));
 }
 
 void Monster::Take_Damage(float InDamagePoint)
 {
-	if (M_StatusData.HealthPoint < 0.f)
+	if (Get_HealthPoint() < 0.f)
 	{
 		printf("Not Enoungh HealthPoint\n");
 		return;
 	}
 
+	float before = Get_HealthPoint();
+
 	M_StatusData.HealthPoint -= InDamagePoint;
 
-	if (M_StatusData.HealthPoint < 0.f)
+	float after = Get_HealthPoint();
+
+	printf("HealthPoint(%s): %f -> %f\n", Get_Name(), before, after);
+
+	if (Get_HealthPoint() < 0.f)
 	{
 		M_StatusData.HealthPoint = 0.f;
 
