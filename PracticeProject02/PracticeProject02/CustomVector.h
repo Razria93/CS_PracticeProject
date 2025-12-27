@@ -30,51 +30,35 @@ public:
 	size_t size() const { return Size; }
 
 public:
+	T* begin() { return Data; }
+	T* end() { return Data + Size; }
+	const T* begin() const { return Data; }
+	const T* end()   const { return Data + Size; }
+
+public:
 	bool empty() const { return Size == 0; }
 
 public:
 	void push_back(T Indata)
 	{
-		size_t newCapacity = (Capacity == 0) ? 1 : Capacity * 2;
-		if (newCapacity < Capacity) return; // prevent overflow
+		std::printf("[push_back]\n");
 
-		if (Capacity == 0)
+		if (Size == Capacity)
 		{
-			std::printf("[push_back/init]\n");
+			size_t newCapacity = (Capacity == 0) ? 1 : Capacity * 2;
+			if (newCapacity < Capacity) return; // overflow guard
 
-			Data = new T[newCapacity];
+			T* tempData = new T[newCapacity];
+			for (size_t i = 0; i < Size; ++i)
+				tempData[i] = Data[i];
 
-			Data[0] = Indata;
-			++Size;
-		}
-		else
-		{
-			if (Size >= Capacity)
-			{
-				std::printf("[push_back/Add Capacity] %zu -> %zu\n", Capacity, newCapacity);
-
-				T* tempData = new T[newCapacity];
-
-				for (size_t i = 0; i < Size; i++)
-				{
-					tempData[i] = Data[i];
-				}
-
-				tempData[Size] = Indata;
-				++Size;
-
-				delete[] Data;
-
-				Data = tempData;
-			}
-			else // Size < Capcacity
-			{
-				Data[Size] = Indata;
-				++Size;
-			}
+			delete[] Data;
+			Data = tempData;
+			Capacity = newCapacity;
 		}
 
-		Capacity = newCapacity;
+		Data[Size] = Indata;
+		++Size;
 
 		PrintData();
 	}
