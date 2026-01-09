@@ -57,7 +57,80 @@
 - resize()					: 벡터의 크기 재조정하여 재할당
 - operator[]				: 배열의 특정 원소에 [] 기호를 가지고 접근
 - data()					: 벡터의 시작 포인터
-- inSert()					: 원소 삽입
+- insert()					: 원소 삽입
 - erase()					: 원소 삭제
 - swap()					: 원소 교환
 - begin(), end()			: 반복자 (순회하며 접근하는 반복문에서 필요한 접근 수단)
+
+---
+
+### std::vector 구조 예제
+
+```cpp
+#include <vector>
+#include <iostream>
+#include <string>
+
+int main()
+{
+    // 1) 초기화(생성)
+    std::vector<int> v0;                 // empty (size=0)
+    std::vector<int> v1(5);              // size=5, 값은 0으로 value-init
+    std::vector<int> v2(5, 7);           // size=5, 모든 값 7
+    std::vector<int> v3{1, 2, 3, 4};     // initializer_list
+    std::vector<int> v4 = v3;            // 복사(copy)
+    std::vector<int> v5 = std::move(v3); // 이동(move), v3는 "유효하지만 상태 미정(보통 비어짐)"
+
+    // 2) 조회(상태/포인터)
+    std::cout << "v2 size=" << v2.size() << " cap=" << v2.capacity() << "\n";
+    std::cout << "v2 data=" << (const void*)v2.data() << "\n"; // 내부 버퍼 시작 주소(없으면 nullptr일 수도)
+
+    // 3) 추가(push_back / emplace_back)
+    std::vector<std::string> s;
+    s.push_back("A");            // 복사/이동으로 추가
+    s.emplace_back(3, 'x');      // "xxx" 직접 생성(생성자 인자 전달)
+
+    // 4) 할당 변경(대입 / assign)
+    std::vector<int> a{1,2,3};
+    std::vector<int> b{9,9};
+
+    b = a;                       // 대입(복사) : b의 내용이 a로 교체
+    b = {10, 20};                // initializer_list 대입
+    b.assign(4, 5);              // size=4, 모두 5로 채움
+    b.assign(a.begin(), a.end()); // range assign
+
+    // 5) 수정(삽입/삭제)
+    std::vector<int> x{10, 20, 30, 40};
+
+    x.insert(x.begin() + 1, 15);       // 10, 15, 20, 30, 40
+    x.erase(x.begin() + 2);            // (0-based) 20 제거 -> 10, 15, 30, 40
+    x.erase(x.begin(), x.begin() + 2); // 앞 2개 제거 -> 30, 40
+
+    // 6) pop_back / clear
+    x.push_back(50);   // 30, 40, 50
+    x.pop_back();      // 30, 40  (마지막 1개 제거)
+    x.clear();         // size=0 (capacity는 유지될 수 있음)
+
+    // 7) 용량 관리(reserve / shrink_to_fit / resize)
+    std::vector<int> r;
+    r.reserve(100);    // capacity >= 100 확보(재할당/복사 비용 줄이기 목적)
+    r.resize(3);       // size=3 (값은 0으로 채워짐)
+    r.resize(5, 7);    // size=5, 새로 늘어난 2개는 7
+    r.resize(2);       // size=2로 축소(뒤 원소 제거)
+
+    r.shrink_to_fit(); // 구현에 따라 capacity를 size에 맞춰 줄이려 "요청"(보장 아님)
+
+    // 8) swap (교체) / 실제 메모리 해제 트릭
+    std::vector<int> m(1000, 1);
+    std::vector<int>().swap(m);  // m을 빈 벡터와 swap → m의 capacity까지 사실상 비우는 패턴(자주 쓰임)
+
+    // 9) 범위 기반 루프 / 인덱싱
+    std::vector<int> p{1,2,3};
+    for (int& e : p) e *= 10;    // 10,20,30
+    std::cout << p[0] << "\n";   // 10 (범위 체크 없음)
+    std::cout << p.at(0) << "\n"; // 10 (범위 체크, 예외 발생 가능)
+
+    return 0;
+}
+
+```
