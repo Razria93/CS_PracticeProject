@@ -4,24 +4,34 @@
 
 int main()
 {
+	int push_num = 4;
+
 	CustomVector<bool> ver_bool;
 	ver_bool.PrintData();
-
+	
 	bool data_bool = true;
-
-	int push_num = 4;
+	
+	
 	for (int i = 0; i < push_num; i++)
 	{
 		ver_bool.push_back(data_bool);
+		ver_bool.PrintBitLayout(i);
 	}
 
-	// ver_bool.pop_back();
-	// ver_bool.PrintElements();
-	// ver_bool.insert(2, false);
-	// ver_bool.PrintElements();
-	// ver_bool.erase(2);
-	// ver_bool.PrintElements();
-	// ver_bool.clear();
+	ver_bool.pop_back();
+	ver_bool.PrintBitLayout(push_num - 1);
+	ver_bool.PrintElements();
+
+	ver_bool.insert(2, false);
+	ver_bool.PrintBitLayout(2);
+	ver_bool.PrintElements();
+	
+
+	ver_bool.erase(2);
+	ver_bool.PrintBitLayout(2);
+	ver_bool.PrintElements();
+	
+	ver_bool.clear();
 
 
 	std::printf("------------------------------\n");
