@@ -98,7 +98,7 @@ MyString::~MyString()
 
 unsigned int MyString::GetLength() const
 {
-	return Length;
+	return (int)Length;
 }
 
 const char* MyString::GetCString() const
