@@ -128,4 +128,30 @@ void MyString::ToUpper()
 {
 }
 
+void MyString::Print()
+{
+	printf("\n[Print]\n");
+
+	if (!Base)
+	{
+		printf("Base pointer is nullptr\n");
+		return;
+	}
+
+	for (int i = 0; i < Length; ++i)
+	{
+		char newChar = *(Base + i);
+
+		if (newChar == '\0')
+		{
+			printf("'\\0' is Valid in target MyString and early return\n");
+			break;
+		}
+
+		printf("%c", newChar);
+	}
+
+	printf("\n");
+}
+
 } // namespace assignment1

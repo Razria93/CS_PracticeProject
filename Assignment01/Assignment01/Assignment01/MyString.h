@@ -30,5 +30,6 @@ class MyString
 	bool operator==(const MyString& rhs) const;
 	void ToLower();
 	void ToUpper();
+	void Print();
 };
 } // namespace assignment1
