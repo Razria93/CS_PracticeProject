@@ -27,5 +27,12 @@ int main()
 	printf("str03: %p\n", &str03);
 	str03.Print();
 
+	int idx00 = str03.IndexOf("str");
+	printf("IndexOf: %d\n", idx00);
+	int idx01 = str03.IndexOf("llo");
+	printf("IndexOf: %d\n", idx01);
+	int idx02 = str03.IndexOf("!");
+	printf("IndexOf: %d\n", idx02);
+
 	return 0;
 } // Call Destructor

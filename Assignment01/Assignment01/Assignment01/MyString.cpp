@@ -179,7 +179,6 @@ MyString MyString::operator+(const MyString& other) const
 	MyString newString;
 	newString.Base = newBase;
 	newString.Length = Length + otherLength;
-	
 	// newString.Print();
 
 	return newString;
@@ -187,7 +186,76 @@ MyString MyString::operator+(const MyString& other) const
 
 int MyString::IndexOf(const char* s)
 {
-	return 0;
+	printf("\n[IndexOf]\n");
+
+	const char* base = s;
+	size_t length = 0;
+
+	const char* temp = nullptr;
+
+	while (true)
+	{
+		temp = base + length;
+
+		if (*temp == '\0')
+		{
+
+			printf("Find '\\0'\n");
+			printf("InBasePtr: %p | FinalSize: %zd\n", s, length);
+			break;
+		}
+		else
+		{
+			++length;
+			printf("char: %c | pointer: %p | length: %zd\n", *temp, temp, length);
+			continue;
+		}
+	}
+
+	bool bEqualStart = false;
+	bool bEqualEnd = false;
+
+	size_t startIdx = 0;
+	size_t endIdx = 0;
+
+	for (size_t i = 0; i < Length; ++i)
+	{
+		for (size_t j = 0; j < length; ++j)
+		{
+			if (Base[i + j] == base[j])
+			{
+				if (bEqualStart == false)
+				{
+					startIdx = i;
+					bEqualStart = true;
+				}
+
+				if (bEqualStart == true && bEqualEnd == false && j == (length - 1))
+				{
+					endIdx = i;
+					bEqualEnd = true;
+				}
+			}
+			else
+			{
+				bEqualStart = false;
+				bEqualEnd = false;
+				startIdx = 0;
+				endIdx = 0;
+
+				break;
+			}
+		}
+
+		if (bEqualStart == true && bEqualEnd == true)
+		{
+			printf("Valid equal string[startIdx: %zd | endIdx: %zd]\n", startIdx, endIdx);
+			return (int)startIdx;
+		}
+	}
+
+	printf("InValid equal string\n");
+	return -1;
 }
 
 int MyString::LastIndexOf(const char* s)
