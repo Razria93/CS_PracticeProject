@@ -16,5 +16,8 @@ int main()
 	MyString str02(str01);
 	str02.Print();
 
+	str02.Append(" World!");
+	str02.Print();
+
 	return 0;
 } // Call Destructor

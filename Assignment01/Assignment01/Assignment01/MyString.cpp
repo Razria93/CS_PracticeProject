@@ -99,6 +99,46 @@ const char* MyString::GetCString() const
 
 void MyString::Append(const char* s)
 {
+	printf("\n[Append]\n");
+
+	const char* temp = s;
+	size_t length = 0;
+
+	while (true)
+	{
+		temp = s + length;
+
+		if (*temp == '\0')
+		{
+
+			printf("Find '\\0'\n");
+			printf("OldBasePtr: %p | FinalSize: %zd\n", s, length);
+			break;
+		}
+		else
+		{
+			++length;
+			printf("char: %c | pointer: %p | length: %zd\n", *temp, temp, length);
+			continue;
+		}
+	}
+
+	char* newBase = new char[Length + length];
+
+	for (size_t i = 0; i < Length; ++i)
+	{
+		newBase[i] = Base[i];
+	}
+
+	for (size_t j = 0; j < length; ++j)
+	{
+		
+		newBase[Length + j] = *(s + j);
+	}
+
+	Base = newBase;
+	Length = Length + length;
+	printf("NewBasePtr: %p | FinalSize: %zd\n", Base, Length);
 }
 
 MyString MyString::operator+(const MyString& other) const
