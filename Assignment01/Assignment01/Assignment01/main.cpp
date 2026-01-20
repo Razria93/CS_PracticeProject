@@ -103,5 +103,15 @@ int main()
 	printf("\n[After]");
 	str16.Print();
 
+	MyString str17("upPer");
+
+	printf("\n[Before]");
+	str17.Print();
+
+	str17.ToUpper();
+
+	printf("\n[After]");
+	str17.Print();
+
 	return 0;
 } // Call Destructor

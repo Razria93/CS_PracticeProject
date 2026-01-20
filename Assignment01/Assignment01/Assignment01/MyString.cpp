@@ -742,6 +742,28 @@ void MyString::ToLower()
 
 void MyString::ToUpper()
 {
+	int a = (int)'a'; // 97
+	int z = (int)'z'; 
+	int A = (int)'A'; // 65
+	int Z = (int)'Z';
+	
+	int subtract = a - A;
+
+	printf("a: %d | A: %d | subtract: %d\n", a, A, subtract);
+	printf("z: %d | Z: %d | subtract: %d\n", z, Z, subtract);
+
+	for (int i = 0; i < Length; ++i)
+	{
+		char temp = Base[i];
+		printf("%c: %d\n", temp, (int)temp);
+
+		if (temp >= a && temp <= z)
+		{
+			int temp_int = (int)Base[i] - subtract;
+			Base[i] = (char)temp_int;
+			printf("Before: %d(%c) | After: %d(%c)\n", (int)temp, temp, temp_int, (char)temp_int);
+		}
+	}
 }
 
 void MyString::Clear()
