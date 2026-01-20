@@ -14,12 +14,14 @@ MyString::MyString(const char* s)
 {
 	printf("\n[Default-Constructor]\n");
 
-	const char* temp = s;
+	const char* base = s;
 	size_t length = 0;
+
+	const char* temp = nullptr;
 
 	while (true)
 	{
-		temp = s + length;
+		temp = base + length;
 
 		if (*temp == '\0')
 		{
@@ -36,13 +38,16 @@ MyString::MyString(const char* s)
 		}
 	}
 
-	char* newBase = new char[length];
+	char* newBase = new char[length + 1];
 
 	for (size_t i = 0; i < length; ++i)
 	{
 		newBase[i] = *(s + i);
 		printf("Input: %c | Output: %c | idx: %zd\n", *(newBase + i), *(s + i), i);
 	}
+
+	newBase[length] = '\0';
+	Clear();
 
 	Base = newBase;
 	Length = length;
@@ -62,7 +67,7 @@ MyString::MyString(const MyString& other)
 		return;
 	}
 
-	char* newBase = new char[otherLength];
+	char* newBase = new char[otherLength + 1];
 	size_t newLength = otherLength;
 
 	for (int i = 0; i < otherLength; ++i)
@@ -79,6 +84,9 @@ MyString::MyString(const MyString& other)
 		newBase[i] = newChar;
 	}
 
+	newBase[newLength] = '\0';
+	Clear();
+
 	Base = newBase;
 	Length = newLength;
 }
@@ -89,9 +97,7 @@ MyString::~MyString()
 
 	printf("OldBasePtr: %p | FinalSize: %zd\n", Base, Length);
 
-	delete[] Base;
-	Base = nullptr;
-	Length = 0;
+	Clear();
 
 	printf("NewBasePtr: %p | FinalSize: %zd\n", Base, Length);
 }
@@ -110,12 +116,14 @@ void MyString::Append(const char* s)
 {
 	printf("\n[Append]\n");
 
-	const char* temp = s;
+	const char* base = s;
 	size_t length = 0;
+
+	const char* temp = nullptr;
 
 	while (true)
 	{
-		temp = s + length;
+		temp = base + length;
 
 		if (*temp == '\0')
 		{
@@ -132,7 +140,8 @@ void MyString::Append(const char* s)
 		}
 	}
 
-	char* newBase = new char[Length + length];
+	char* newBase = new char[Length + length + 1];
+	size_t newLength = Length + length;
 
 	for (size_t i = 0; i < Length; ++i)
 	{
@@ -145,8 +154,11 @@ void MyString::Append(const char* s)
 		newBase[Length + j] = *(s + j);
 	}
 
+	newBase[newLength] = '\0';
+	Clear();
+
 	Base = newBase;
-	Length = Length + length;
+	Length = newLength;
 	printf("NewBasePtr: %p | FinalSize: %zd\n", Base, Length);
 }
 
@@ -163,7 +175,8 @@ MyString MyString::operator+(const MyString& other) const
 		return MyString();
 	}
 
-	char* newBase = new char[Length + otherLength];
+	char* newBase = new char[Length + otherLength + 1];
+	size_t newLength = Length + otherLength;
 
 	for (size_t i = 0; i < Length; ++i)
 	{
@@ -176,9 +189,11 @@ MyString MyString::operator+(const MyString& other) const
 		newBase[Length + j] = other.Base[j];
 	}
 
+	newBase[newLength] = '\0';
+
 	MyString newString;
 	newString.Base = newBase;
-	newString.Length = Length + otherLength;
+	newString.Length = newLength;
 	// newString.Print();
 
 	return newString;
@@ -261,14 +276,14 @@ int MyString::IndexOf(const char* s)
 
 				break;
 			}
-		} // for j
+		} // for k
 
 		if (bEqualStart == true && bEqualEnd == true) // Early-Return
 		{
 			printf("Valid equal string[startIdx: %zd | endIdx: %zd]\n", startIdx, endIdx);
 			return (int)startIdx;
 		}
-			} // for i
+	} // for i
 
 	printf("InValid equal string\n");
 	return -1;
@@ -365,7 +380,7 @@ int MyString::LastIndexOf(const char* s)
 
 				continue;
 			}
-		} // for j
+		} // for k
 	} // for i
 
 	if (bEqualStart_cached == true && bEqualEnd_cached == true)
@@ -418,6 +433,13 @@ void MyString::ToLower()
 
 void MyString::ToUpper()
 {
+}
+
+void MyString::Clear()
+{
+	delete[] Base;
+	Base = nullptr;
+	Length = 0;
 }
 
 void MyString::Print()
