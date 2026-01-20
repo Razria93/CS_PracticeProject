@@ -33,7 +33,7 @@ MyString::MyString(const char* s)
 		else
 		{
 			++length;
-			printf("char: %c | pointer: %p | length: %zd\n", *temp, temp, length);
+			printf("Char: %c | Pointer: %p | Length: %zd\n", *temp, temp, length);
 			continue;
 		}
 	}
@@ -43,7 +43,7 @@ MyString::MyString(const char* s)
 	for (size_t i = 0; i < length; ++i)
 	{
 		newBase[i] = *(s + i);
-		printf("Input: %c | Output: %c | idx: %zd\n", *(newBase + i), *(s + i), i);
+		printf("Input: %c | Output: %c | Idx: %zd\n", *(newBase + i), *(s + i), i);
 	}
 
 	newBase[length] = '\0';
@@ -135,7 +135,7 @@ void MyString::Append(const char* s)
 		else
 		{
 			++length;
-			printf("char: %c | pointer: %p | length: %zd\n", *temp, temp, length);
+			printf("Char: %c | Pointer: %p | Length: %zd\n", *temp, temp, length);
 			continue;
 		}
 	}
@@ -276,7 +276,7 @@ int MyString::IndexOf(const char* s)
 
 				break;
 			}
-		} // for k
+		} // for j
 
 		if (bEqualStart == true && bEqualEnd == true) // Early-Return
 		{
@@ -380,7 +380,7 @@ int MyString::LastIndexOf(const char* s)
 
 				continue;
 			}
-		} // for k
+		} // for j
 	} // for i
 
 	if (bEqualStart_cached == true && bEqualEnd_cached == true)
@@ -425,7 +425,7 @@ void MyString::Interleave(const char* s)
 	size_t newLength = Length + length;
 
 	bool bIsLarge = (int)(Length - length) > 0 ? true : false;
-	int lengthSubtract = bIsLarge ? (int)(Length - length) : (int)(length - Length);
+	size_t lengthSubtract = bIsLarge ? (Length - length) : (length - Length);
 
 	for (size_t i = 0; i < newLength - lengthSubtract; ++i)
 	{
@@ -481,7 +481,7 @@ bool MyString::RemoveAt(unsigned int index)
 	char* newBase = new char[Length];
 	size_t newLength = Length - 1;
 
-	for (int i = 0; i < newLength; ++i)
+	for (size_t i = 0; i < newLength; ++i)
 	{
 		if (i < index)
 		{

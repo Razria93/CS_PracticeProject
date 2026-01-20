@@ -11,7 +11,7 @@ int main()
 	printf("\n[Get]\n");
 	const char* getBase = str01.GetCString();
 	size_t getLength = str01.GetLength();
-	printf("getBase: %p | getLength: %zd\n", getBase, getLength);
+	printf("GetBase: %p | GetLength: %zd\n", getBase, getLength);
 
 	MyString str02(str01);
 	str02.Print();
