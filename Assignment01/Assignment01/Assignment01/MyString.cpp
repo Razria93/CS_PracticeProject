@@ -664,6 +664,22 @@ void MyString::PadRight(unsigned int totalLength, const char c)
 
 void MyString::Reverse()
 {
+	printf("\n[Reverse]\n");
+
+	if (Length <= 1)
+	{
+		printf("String length is too short to reverse.\n");
+		printf("Length: %zd\n", Length);
+	}
+
+	for (size_t i = 0; i < (Length / 2); ++i)
+	{
+		printf("[Change] idx: %zd (%c) | idx: %zd (%c)\n", i, Base[i], (Length - 1) - i, Base[(Length - 1) - i]);
+
+		const char temp = Base[i];
+		Base[i] = Base[(Length - 1) - i];
+		Base[(Length - 1) - i] = temp;
+	}
 }
 
 bool MyString::operator==(const MyString& rhs) const

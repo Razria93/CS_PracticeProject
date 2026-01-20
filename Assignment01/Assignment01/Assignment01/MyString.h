@@ -5,7 +5,7 @@ namespace assignment1
 class MyString
 {
   private:
-	const char* Base = nullptr;
+	char* Base = nullptr;
 	size_t Length = 0;
 
   public:

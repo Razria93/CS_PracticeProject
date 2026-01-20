@@ -74,5 +74,17 @@ int main()
 	str10.PadRight(15, '#');
 	str10.Print();
 
+	MyString str11("Reverse");
+	str11.Reverse();
+	str11.Print();
+
+	MyString str12("Change");
+	str12.Reverse();
+	str12.Print();
+
+	MyString str13("1");
+	str13.Reverse();
+	str13.Print();
+
 	return 0;
 } // Call Destructor
