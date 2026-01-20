@@ -41,5 +41,9 @@ int main()
 	int idx05 = str03.LastIndexOf("!");
 	printf("IndexOf: %d\n", idx05);
 
+	MyString str04("Shift");
+	str04.Interleave("Change");
+	str04.Print();
+
 	return 0;
 } // Call Destructor

@@ -395,6 +395,74 @@ int MyString::LastIndexOf(const char* s)
 
 void MyString::Interleave(const char* s)
 {
+	printf("\n[Interleave]\n");
+
+	const char* temp = s;
+
+	const char* base = s;
+	size_t length = 0;
+
+	while (true)
+	{
+		temp = s + length;
+
+		if (*temp == '\0')
+		{
+
+			printf("Find '\\0'\n");
+			printf("OldBasePtr: %p | FinalSize: %zd\n", s, length);
+			break;
+		}
+		else
+		{
+			++length;
+			printf("char: %c | pointer: %p | length: %zd\n", *temp, temp, length);
+			continue;
+		}
+	}
+
+	char* newBase = new char[Length + length + 1];
+	size_t newLength = Length + length;
+
+	bool bIsLarge = (int)(Length - length) > 0 ? true : false;
+	int lengthSubtract = bIsLarge ? (int)(Length - length) : (int)(length - Length);
+
+	for (size_t i = 0; i < newLength - lengthSubtract; ++i)
+	{
+		bool shift = (i % 2 != 0) ? true : false;
+		size_t idx = i / 2;
+
+		if (shift == false)
+		{
+			newBase[i] = Base[idx];
+		}
+		else // shift == true
+		{
+			newBase[i] = *(s + idx);
+		}
+	}
+
+	if (lengthSubtract != 0 && bIsLarge == true)
+	{
+		for (size_t j = 0; j < lengthSubtract; ++j)
+		{
+			newBase[(newLength - lengthSubtract) + j] = Base[(Length - lengthSubtract) + j];
+		}
+	}
+	else if (lengthSubtract != 0 && bIsLarge == false)
+	{
+		for (size_t k = 0; k < lengthSubtract; ++k)
+		{
+			newBase[(newLength - lengthSubtract) + k] = base[(length - lengthSubtract) + k];
+		}
+	}
+
+	newBase[newLength] = '\0';
+	Clear();
+
+	Base = newBase;
+	Length = newLength;
+	printf("NewBasePtr: %p | FinalSize: %zd\n", Base, Length);
 }
 
 bool MyString::RemoveAt(unsigned int index)
