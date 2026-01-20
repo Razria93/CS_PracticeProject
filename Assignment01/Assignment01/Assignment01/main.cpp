@@ -94,10 +94,10 @@ int main()
 	printf("str11 and str12 is equal? : %s", (str14 == str15) ? "true" : "false\n"); // false
 
 	MyString str16("LoWer");
-	
+
 	printf("\n[Before]");
 	str16.Print();
-	
+
 	str16.ToLower();
 
 	printf("\n[After]");
