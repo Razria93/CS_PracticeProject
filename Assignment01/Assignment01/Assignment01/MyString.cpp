@@ -226,14 +226,30 @@ int MyString::IndexOf(const char* s)
 			{
 				if (bEqualStart == false)
 				{
-					startIdx = i;
-					bEqualStart = true;
-				}
+					if (length == 1)
+					{
+						startIdx = i + j;
+						endIdx = i + j;
 
-				if (bEqualStart == true && bEqualEnd == false && j == (length - 1))
+						bEqualStart = true;
+						bEqualEnd = true;
+
+						break;
+					}
+					else
+					{
+						startIdx = i + j;
+						bEqualStart = true;
+
+						continue;
+					}
+				}
+				else if (bEqualEnd == false && j == (length - 1))
 				{
-					endIdx = i;
+					endIdx = i + j;
 					bEqualEnd = true;
+
+					break;
 				}
 			}
 			else
@@ -245,14 +261,14 @@ int MyString::IndexOf(const char* s)
 
 				break;
 			}
-		}
+		} // for j
 
-		if (bEqualStart == true && bEqualEnd == true)
+		if (bEqualStart == true && bEqualEnd == true) // Early-Return
 		{
 			printf("Valid equal string[startIdx: %zd | endIdx: %zd]\n", startIdx, endIdx);
 			return (int)startIdx;
 		}
-	}
+			} // for i
 
 	printf("InValid equal string\n");
 	return -1;
