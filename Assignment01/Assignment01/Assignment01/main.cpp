@@ -50,9 +50,17 @@ int main()
 	str04.RemoveAt(10);
 	str04.Print();
 
-	MyString str05("PadLeft");
+	MyString str05("PadLeft_1");
 	str05.PadLeft(10);
 	str05.Print();
+
+	MyString str06("PadLeft_2");
+	str06.PadLeft(10, '\0');
+	str06.Print();
+
+	MyString str07("PadLeft_3");
+	str07.PadLeft(10, '#');
+	str07.Print();
 
 	return 0;
 } // Call Destructor
