@@ -66,5 +66,13 @@ int main()
 	str08.PadRight(15);
 	str08.Print();
 
+	MyString str09("PadRight_2");
+	str09.PadRight(15, '\0');
+	str09.Print();
+
+	MyString str10("PadRight_3");
+	str10.PadRight(15, '#');
+	str10.Print();
+
 	return 0;
 } // Call Destructor

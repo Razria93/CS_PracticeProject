@@ -621,6 +621,45 @@ void MyString::PadRight(unsigned int totalLength)
 
 void MyString::PadRight(unsigned int totalLength, const char c)
 {
+	printf("\n[PadRight(with %c)]\n", c);
+
+	if (totalLength <= Length)
+	{
+		printf("Specified TotalLength is too small for padding\n");
+		printf("InTotalLength: %d | StringLength: %zd\n", totalLength, Length);
+		return;
+	}
+
+	if (c == '\0')
+	{
+		printf("Null character('\\0) cannot be used for padding.\n");
+		printf("InTotalLength: %d | StringLength: %zd\n", totalLength, Length);
+		return;
+	}
+
+	char* newBase = new char[totalLength + 1];
+	size_t newLength = totalLength;
+	size_t lengthSubtract = totalLength - Length;
+
+	for (size_t i = 0; i < Length; ++i)
+	{
+		newBase[i] = Base[i];
+	}
+
+	for (size_t j = 0; j < lengthSubtract; ++j)
+	{
+		newBase[Length + j] = c;
+	}
+
+	newBase[newLength] = '\0';
+	Clear();
+
+	Base = newBase;
+	Length = newLength;
+
+	printf("NewBasePtr: %p | FinalSize: %zd\n", Base, Length);
+
+	return;
 }
 
 void MyString::Reverse()
