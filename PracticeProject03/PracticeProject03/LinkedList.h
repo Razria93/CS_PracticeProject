@@ -151,11 +151,9 @@ public:
 		Node* oldHead = Head;
 		size_t oldHeadIdx = 0;
 
-		Node* newHead = nullptr;
 		size_t newSize = Size - 1;
 
 		Node* afterNode = oldHead->Next;
-
 		if (!afterNode)
 		{
 			std::printf("%-15s : Pointer: %p | Index: %d\n", "Error", afterNode, 0);
@@ -163,16 +161,13 @@ public:
 		}
 		else
 		{
-			newHead = afterNode;
+			Head = afterNode;
+			Size = newSize;
+
+			Delete(oldHead, oldHeadIdx);
+			return true;
 		}
-
-		oldHead->Next = nullptr;
-
-		Head = newHead;
-		Size = newSize;
-
-		Delete(oldHead, oldHeadIdx);
-		return true;
+		return false; // Undefined
 	}
 
 public:
@@ -190,7 +185,6 @@ public:
 		Node* oldTail = Tail;
 		size_t oldTailIdx = Size - 1;
 
-		Node* newTail = nullptr;
 		size_t newSize = Size - 1;
 
 		Node* beforeNode = nullptr;
@@ -218,20 +212,21 @@ public:
 			if (i < (newSize - 1))
 			{
 				beforeNode = curNode;
+				curNode = nullptr;
 				continue;
 			}
 			else // Last index (i == (newSize - 1))
 			{
-				newTail = curNode;
-				break;
+				curNode->Next = nullptr;
+
+				Tail = curNode;
+				Size = newSize;
+
+				Delete(oldTail, oldTailIdx);
+				return true;
 			}
 		}
-
-		Tail = newTail;
-		Size = newSize;
-
-		Delete(oldTail, oldTailIdx);
-		return true;
+		return false; // Undefined
 	}
 
 public:
@@ -241,8 +236,6 @@ public:
 		if (InIndex >= Size) return false;
 
 		if (InIndex == 0) return true; // Head is Valid
-
-		Node* target = nullptr;
 
 		Node* beforeNode = nullptr;
 		for (size_t i = 0; i <= InIndex; ++i)
@@ -269,17 +262,16 @@ public:
 			if (i < (InIndex))
 			{
 				beforeNode = curNode;
+				curNode = nullptr;
 				continue;
 			}
 			else // Last index (i == newSize)
 			{
-				target = curNode;
-				break;
+				std::printf("%-15s : Pointer: %p | Index: %zd\n", "Valid", curNode, InIndex);
+				return true;
 			}
 		}
-
-		std::printf("%-15s : Pointer: %p | Index: %zd\n", "Valid", target, InIndex);
-		return true;
+		return false; // Undefined
 	}
 
 public:
