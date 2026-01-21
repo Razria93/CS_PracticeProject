@@ -22,6 +22,11 @@ int main()
 	LinkedList::PrintLinkedListData(linkedList);
 	LinkedList::PrintAllNodeData(linkedList);
 
+	std::printf("## PopFront ##\n");
+	linkedList->PopFront();
+	LinkedList::PrintLinkedListData(linkedList);
+	LinkedList::PrintAllNodeData(linkedList);
+
 	std::printf("## Clear ##\n");
 	linkedList->Clear();
 	LinkedList::PrintLinkedListData(linkedList);

@@ -144,6 +144,23 @@ public:
 	}
 
 public:
+	void PopFront()
+	{
+		if (!Head) return;
+
+		std::printf("[PopFront]\n");
+
+		if (Size <= 1) Clear();
+
+		Node* oldHead = Head;
+
+		Head = oldHead->Next ? oldHead->Next : nullptr;
+		--Size;
+
+		Delete(oldHead, 0);
+	}
+
+public:
 	static void PrintLinkedListData(LinkedList* InLinkedList)
 	{
 		std::printf("========================================\n");
