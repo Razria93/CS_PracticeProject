@@ -56,4 +56,26 @@ public:
 		Tail = nullptr;
 		Size = 0;
 	}
+
+public:
+	static void PrintLinkedListData(LinkedList* InLinkedList)
+	{
+		std::printf("========================================\n");
+		std::printf("[PrintLinkedListData]\n");
+
+		if (InLinkedList == nullptr)
+		{
+			std::printf("----------------------------------------\n");
+			std::printf("%-15s : %s\n", "LinkedList", "nullptr");
+			std::printf("========================================\n");
+			return;
+		}
+
+		std::printf("----------------------------------------\n");
+		std::printf("%-15s : %p\n", "InLinkedList", (void*)InLinkedList);
+		std::printf("%-15s : %p\n", "Head", (void*)InLinkedList->Head);
+		std::printf("%-15s : %p\n", "Tail", (void*)InLinkedList->Tail);
+		std::printf("%-15s : %zu\n", "Size", InLinkedList->Size);
+		std::printf("========================================\n");
+	}
 };
