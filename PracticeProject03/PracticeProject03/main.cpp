@@ -56,6 +56,13 @@ int main()
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 
+	std::printf("## Insert_after##\n");
+	size_t targetIdx = 3;
+	int targetValue = 1000;
+	std::printf("%-15s : %-5s\n", "Insert_after", linkedList->Insert_after(targetIdx, targetValue) ? "true" : "false");
+	LinkedList::PrintLinkedListData(linkedList);
+	LinkedList::PrintAllNodeData(linkedList);
+
 	std::printf("## Clear ##\n");
 	linkedList->Clear();
 	// LinkedList::PrintLinkedListData(linkedList);

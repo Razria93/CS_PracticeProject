@@ -306,6 +306,91 @@ public:
 	}
 
 public:
+	bool Insert_after(size_t InIndex, int InValue)
+	{
+		if (!Head) return false;
+		if (!Tail) return false;
+		if (InIndex >= Size) return false;
+
+		Node* newNode = new Node;
+		newNode->Value = InValue;
+		newNode->Next = nullptr;
+
+		if (InIndex == 0) // Head is Valid 
+		{
+			Node* beforeNode = Head;
+			Node* afterNode = Head->Next;
+
+			beforeNode->Next = newNode;
+
+			if(afterNode)
+			{
+				newNode->Next = afterNode;
+			}
+			else
+			{
+				newNode->Next = nullptr;
+				Tail = newNode;
+			}
+
+			++Size;
+			
+			return true; 
+		}
+
+		Node* beforeNode = nullptr;
+		for (size_t i = 0; i <= InIndex; ++i)
+		{
+			if (i == 0) // Init
+			{
+				beforeNode = Head;
+				continue;
+			}
+
+			// UpdateNextNode
+			Node* curNode = beforeNode->Next;
+
+			// Validate
+			if (!curNode)
+			{
+				std::printf("%-15s : Pointer: %p | Index: %zd\n", "Error", curNode, i);
+				return false;
+			}
+
+			// Check Index
+			if (i < (InIndex))
+			{
+				beforeNode = curNode;
+				curNode = nullptr;
+				continue;
+			}
+			else // Last index (i == newSize)
+			{
+				Node* beforeNode = curNode;
+				Node* afterNode = curNode->Next;
+
+				beforeNode->Next = newNode;
+
+				if (afterNode)
+				{
+					newNode->Next = afterNode;
+				}
+				else
+				{
+					newNode->Next = nullptr;
+					Tail = newNode;
+				}
+
+				++Size;
+
+				std::printf("%-15s : Pointer: %p | Index: %zd\n", "Valid", curNode, InIndex);
+				return true;
+			}
+		}
+		return false; // Undefined
+	}
+
+public:
 	static void PrintLinkedListData(LinkedList* InLinkedList)
 	{
 		std::printf("========================================\n");
