@@ -38,7 +38,13 @@ public:
 	~LinkedList()
 	{
 		std::printf("[Destructor]\n");
-		
+		Clear();
+	}
+public:
+	void Clear()
+	{
+		std::printf("[Clear]\n");
+
 		for (int i = 0; i < Size; ++i)
 		{
 			if (!Head) break;
@@ -46,10 +52,7 @@ public:
 			Node* oldHead = Head;
 			Head = Head->Next;
 
-			oldHead->Value = 0;
-			oldHead->Next = nullptr;
-
-			delete oldHead;
+			Delete(oldHead, i);
 		}
 
 		Head = nullptr;
@@ -57,6 +60,22 @@ public:
 		Size = 0;
 	}
 
+public:
+	void Delete(Node* InNode, size_t InIndex)
+	{
+		if (!InNode) return;
+
+		std::printf("[Delete(Before)]\n");
+		PrintNodeData(InNode, InIndex);
+
+		InNode->Value = 0;
+		InNode->Next = nullptr;
+
+		std::printf("[Delete(After)]\n");
+		PrintNodeData(InNode, InIndex);
+		
+		delete InNode;
+	}
 public:
 	static void PrintLinkedListData(LinkedList* InLinkedList)
 	{
