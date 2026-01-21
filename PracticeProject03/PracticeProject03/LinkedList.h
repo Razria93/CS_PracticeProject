@@ -43,6 +43,10 @@ public:
 
 public:
 	size_t Size() const { return Size; }
+
+public:
+	bool Empty() { return Size == 0; }
+
 public:
 	void Clear()
 	{
