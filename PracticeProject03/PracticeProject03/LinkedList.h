@@ -161,6 +161,56 @@ public:
 	}
 
 public:
+	void PopBack()
+	{
+		if (!Head) return;
+		if (!Tail) return;
+
+		std::printf("[PopBack]\n");
+
+		if (Size <= 1) Clear();
+
+		Node* newTail = nullptr;
+		size_t newSize = Size - 1;
+
+		for (size_t i = 0; i < newSize; ++i)
+		{
+			if (i == 0)
+			{
+				newTail = Head;
+				continue;
+			}
+			else if (i == (newSize - 1))
+			{
+				// Clean up next node of newTail
+				newTail->Next = nullptr;
+				break;
+			}
+			else // 0 < i < Size - 1
+			{
+				if (newTail->Next)
+				{
+					newTail = newTail->Next;
+					continue;
+				}
+				else
+				{
+					std::printf("Error: InValid NextNode(idx: %zd)\n", i);
+					return;
+				}
+			}
+
+		}
+
+		Node* oldTail = Tail;
+
+		Tail = newTail;
+		Size = newSize;
+
+		Delete(oldTail, Size);
+	}
+
+public:
 	static void PrintLinkedListData(LinkedList* InLinkedList)
 	{
 		std::printf("========================================\n");

@@ -27,6 +27,11 @@ int main()
 	LinkedList::PrintLinkedListData(linkedList);
 	LinkedList::PrintAllNodeData(linkedList);
 
+	std::printf("## PopBack ##\n");
+	linkedList->PopBack();
+	LinkedList::PrintLinkedListData(linkedList);
+	LinkedList::PrintAllNodeData(linkedList);
+
 	std::printf("## Clear ##\n");
 	linkedList->Clear();
 	LinkedList::PrintLinkedListData(linkedList);
