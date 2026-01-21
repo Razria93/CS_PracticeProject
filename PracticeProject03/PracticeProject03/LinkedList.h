@@ -40,6 +40,9 @@ public:
 		std::printf("[Destructor]\n");
 		Clear();
 	}
+
+public:
+	size_t Size() const { return Size; }
 public:
 	void Clear()
 	{
