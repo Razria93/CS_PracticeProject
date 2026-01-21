@@ -32,15 +32,15 @@ int main()
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 
-	std::printf("## Contain_Case01##\n");
-	size_t targetIdx_0 = 1;
-	std::printf("%-15s : %-5s (TargetIdx: %zd)\n", "bContain", linkedList->Contain(targetIdx_0) ? "true" : "false", targetIdx_0);
+	// std::printf("## Contain_Case01##\n");
+	// size_t targetIdx_0 = 1;
+	// std::printf("%-15s : %-5s (TargetIdx: %zd)\n", "bContain", linkedList->Contain(targetIdx_0) ? "true" : "false", targetIdx_0);
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 
-	std::printf("## Contain_Case02##\n");
-	size_t targetIdx_1 = 5;
-	std::printf("%-15s : %-5s (TargetIdx: %zd)\n", "bContain", linkedList->Contain(targetIdx_1) ? "true" : "false", targetIdx_1);
+	// std::printf("## Contain_Case02##\n");
+	// size_t targetIdx_1 = 5;
+	// std::printf("%-15s : %-5s (TargetIdx: %zd)\n", "bContain", linkedList->Contain(targetIdx_1) ? "true" : "false", targetIdx_1);
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 
