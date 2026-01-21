@@ -23,12 +23,12 @@ int main()
 	// LinkedList::PrintAllNodeData(linkedList);
 
 	std::printf("## PopFront ##\n");
-	linkedList->PopFront();
+	std::printf("%-15s : %-5s\n", "bPopFront", linkedList->PopFront() ? "true" : "false");
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 
 	std::printf("## PopBack ##\n");
-	linkedList->PopBack();
+	std::printf("%-15s : %-5s\n", "bPopBack", linkedList->PopBack() ? "true" : "false");
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 

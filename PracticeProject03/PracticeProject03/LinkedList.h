@@ -138,64 +138,100 @@ public:
 	}
 
 public:
-	void PopFront()
+	bool PopFront()
 	{
-		if (!Head) return;
-		if (Size <= 1) Clear();
+		if (!Head) return false;
+
+		if (Size <= 1)
+		{
+			Clear();
+			return true;
+		}
 
 		Node* oldHead = Head;
+		size_t oldHeadIdx = 0;
 
-		Head = oldHead->Next ? oldHead->Next : nullptr;
-		--Size;
+		Node* newHead = nullptr;
+		size_t newSize = Size - 1;
 
-		Delete(oldHead, 0);
+		Node* afterNode = oldHead->Next;
+
+		if (!afterNode)
+		{
+			std::printf("%-15s : Pointer: %p | Index: %d\n", "Error", afterNode, 0);
+			return false;
+		}
+		else
+		{
+			newHead = afterNode;
+		}
+
+		oldHead->Next = nullptr;
+
+		Head = newHead;
+		Size = newSize;
+
+		Delete(oldHead, oldHeadIdx);
+		return true;
 	}
 
 public:
-	void PopBack()
+	bool PopBack()
 	{
-		if (!Head) return;
-		if (!Tail) return;
-		if (Size <= 1) Clear();
+		if (!Head) return false;
+		if (!Tail) return false;
+
+		if (Size <= 1)
+		{
+			Clear();
+			return true;
+		}
+
+		Node* oldTail = Tail;
+		size_t oldTailIdx = Size - 1;
 
 		Node* newTail = nullptr;
 		size_t newSize = Size - 1;
 
+		Node* beforeNode = nullptr;
 		for (size_t i = 0; i < newSize; ++i)
 		{
-			if (i == 0)
+			if (i == 0) // Init
 			{
-				newTail = Head;
+				if (!Head) return false;
+
+				beforeNode = Head;
 				continue;
 			}
-			else if (i == (newSize - 1))
+
+			// UpdateNextNode
+			Node* curNode = beforeNode->Next;
+
+			// Validate
+			if (!curNode)
 			{
-				// Clean up next node of newTail
-				newTail->Next = nullptr;
+				std::printf("%-15s : Pointer: %p | Index: %zd\n", "Error", curNode, i);
+				return false;
+			}
+
+			// Check Index
+			if (i < (newSize - 1))
+			{
+				beforeNode = curNode;
+				continue;
+			}
+			else // Last index (i == (newSize - 1))
+			{
+				newTail = curNode;
 				break;
 			}
-			else // 0 < i < Size - 1
-			{
-				if (newTail->Next)
-				{
-					newTail = newTail->Next;
-					continue;
-				}
-				else
-				{
-					std::printf("%-15s : %s [idx: %zd]\n", "Error", "InValid NextNode", i);
-					return;
-				}
-			}
-
 		}
-
-		Node* oldTail = Tail;
 
 		Tail = newTail;
 		Size = newSize;
 
-		Delete(oldTail, Size);
+		Delete(oldTail, oldTailIdx);
+		return true;
 	}
 
 public:
