@@ -192,8 +192,6 @@ public:
 		{
 			if (i == 0) // Init
 			{
-				if (!Head) return false;
-
 				beforeNode = Head;
 				continue;
 			}
@@ -242,8 +240,6 @@ public:
 		{
 			if (i == 0) // Init
 			{
-				if (!Head) return false;
-
 				beforeNode = Head;
 				continue;
 			}
