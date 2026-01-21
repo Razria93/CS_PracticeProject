@@ -78,4 +78,27 @@ public:
 		std::printf("%-15s : %zu\n", "Size", InLinkedList->Size);
 		std::printf("========================================\n");
 	}
+
+	static void PrintNodeData(const Node* InNode, size_t InIndex)
+	{
+		std::printf("========================================\n");
+		std::printf("[%s]\n", "PrintNodeData");
+
+		if (InNode == nullptr)
+		{
+			std::printf("----------------------------------------\n");
+			std::printf("%-15s : %s\n", "Node", "nullptr");
+			std::printf("========================================\n");
+			return;
+		}
+
+		std::printf("----------------------------------------\n");
+		std::printf("[%s]\n", "PrintNodeData");
+		std::printf("%-15s : %zu\n", "NodeIndex", InIndex);
+		std::printf("%-15s : %p\n", "NodePointer", (void*)InNode);
+		std::printf("%-15s : %s\n", "ValueType", typeid(int).name());
+		std::printf("%-15s : %d\n", "Value", (int)InNode->Value);
+		std::printf("%-15s : %p\n", "NextNode", (void*)InNode->Next);
+		std::printf("========================================\n");
+	}
 };
