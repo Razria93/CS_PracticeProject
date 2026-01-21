@@ -20,3 +20,11 @@ public:
 	{
 	}
 };
+
+class LinkedList
+{
+private:
+	Node* Head = nullptr;
+	Node* Tail = nullptr;
+	size_t Size = 0;
+};
