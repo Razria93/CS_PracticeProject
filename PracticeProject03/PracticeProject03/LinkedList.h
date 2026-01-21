@@ -83,6 +83,37 @@ public:
 		
 		delete InNode;
 	}
+
+public:
+	void PushBack(int InValue)
+	{
+		std::printf("[PushBack]\n");
+		Node* newNode = new Node();
+
+		// Init Push Node
+		newNode->Value = InValue;
+		newNode->Next = nullptr;
+
+		if (!Tail) // Init LinkedList
+		{
+			Tail = newNode;
+
+			if (!Head)
+			{
+				Head = newNode;
+			}
+		}
+		else  // Add to LinkedList
+		{
+			Node* oldTail = Tail;
+
+			oldTail->Next = newNode;
+			Tail = newNode;
+		}
+
+		++Size;
+	}
+
 public:
 	static void PrintLinkedListData(LinkedList* InLinkedList)
 	{
