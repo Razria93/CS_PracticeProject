@@ -44,6 +44,18 @@ int main()
 	// LinkedList::PrintLinkedListData(linkedList);
 	// LinkedList::PrintAllNodeData(linkedList);
 
+	std::printf("## Find##\n");
+	int targetValue = 100;
+	Node* findNode = linkedList->Find(targetValue);
+
+	std::printf("%-15s : %-5s\n", "IsValid", findNode ? "Valid" : "InValid");
+
+	if(findNode)
+		std::printf("%-15s : CurPointer: %p | Value: %d | NextPointer: %p\n", "Find", findNode, findNode->Value, findNode->Next);
+
+	LinkedList::PrintLinkedListData(linkedList);
+	LinkedList::PrintAllNodeData(linkedList);
+
 	std::printf("## Clear ##\n");
 	linkedList->Clear();
 	// LinkedList::PrintLinkedListData(linkedList);

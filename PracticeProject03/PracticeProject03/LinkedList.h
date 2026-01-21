@@ -275,6 +275,41 @@ public:
 	}
 
 public:
+	Node* Find(int InValue)
+	{
+		Node* beforeNode = nullptr;
+		Node* curNode = nullptr;
+
+		for (int i = 0; i < Size; ++i)
+		{
+			if (i == 0)
+			{
+				curNode = Head;
+			}
+			else
+			{
+				curNode = beforeNode->Next;
+			}
+
+			// Validate
+			if (!curNode) return nullptr;
+
+			// Check
+			if (curNode->Value == InValue)
+			{
+				return curNode;
+			}
+			else // curNode->Value != InValue
+			{
+				beforeNode = curNode;
+				curNode = nullptr;
+				continue;
+			}
+		}
+		return nullptr; // Undefined
+	}
+
+public:
 	static void PrintLinkedListData(LinkedList* InLinkedList)
 	{
 		std::printf("========================================\n");
