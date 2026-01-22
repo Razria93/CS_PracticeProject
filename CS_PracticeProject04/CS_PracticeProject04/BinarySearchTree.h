@@ -6,6 +6,7 @@ struct Node
 {
 public:
 	int Value;
+	Node* Parent = nullptr;
 	Node* Left = nullptr;
 	Node* Right = nullptr;
 
@@ -33,6 +34,7 @@ public:
 		Node* node = new Node;
 
 		node->Value = InValue;
+		node->Parent = nullptr;
 		node->Left = nullptr;
 		node->Right = nullptr;
 
@@ -47,7 +49,7 @@ public:
 			Root = node;
 			++Size;
 
-			std::printf("%-15s : NodePtr: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Root", node, node->Value, Size);
+			std::printf("%-15s : Parent: %p | Node: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Root", node->Parent, node, node->Value, Size);
 			return true;
 		}
 
@@ -61,9 +63,10 @@ public:
 				if (!targetNode->Left)
 				{
 					targetNode->Left = node;
+					node->Parent = targetNode;
 					++Size;
 
-					std::printf("%-15s : NodePtr: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Left", node, node->Value, Size);
+					std::printf("%-15s : Parent: %p | Node: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Left", node->Parent, node, node->Value, Size);
 					return true;
 				}
 				else // Valid targetNode->Left
@@ -77,9 +80,10 @@ public:
 				if (!targetNode->Right)
 				{
 					targetNode->Right = node;
+					node->Parent = targetNode;
 					++Size;
 
-					std::printf("%-15s : NodePtr: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Right", node, node->Value, Size);
+					std::printf("%-15s : Parent: %p | Node: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Right", node->Parent, node, node->Value, Size);
 					return true;
 				}
 				else // Valid targetNode->Left
