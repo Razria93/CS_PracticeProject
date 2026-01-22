@@ -13,8 +13,16 @@ int main()
 	bst.Insert(200);
 	bst.Insert(100);
 
+
 	std::printf("\n[Clear]\n");
-	bst.Clear();
+	if (bst.Clear())
+	{
+		std::printf("[Clear_Complete]\n");
+	}
+	else
+	{
+		std::printf("[Clear_Failed]\n");
+	}
 
 	return 0;
 }

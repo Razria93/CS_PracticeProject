@@ -44,7 +44,7 @@ public:
 public:
 	size_t GetSize() const { return Size; }
 	bool Empty() const { return Size == 0; }
-	
+
 public:
 	bool Clear()
 	{
@@ -69,14 +69,14 @@ public:
 
 				if (!parent)
 				{
-					if(targetNode != Root)
+					if (targetNode != Root)
 					{
 						std::printf("%-15s : %s\n", "Error", "InValid Parent.");
 						return false;
 					}
 
 					// targetNode == Root
-					
+
 					Delete(Root);
 
 					Root = nullptr;
@@ -160,7 +160,7 @@ public:
 		}
 
 		// Valid Root
-		
+
 		Node* targetNode = Root;
 		while (targetNode != nullptr)
 		{
@@ -181,7 +181,7 @@ public:
 					continue;
 				}
 			}
-			else if(node->Value > targetNode->Value)
+			else if (node->Value > targetNode->Value)
 			{
 				if (!targetNode->Right)
 				{
@@ -203,6 +203,9 @@ public:
 				std::printf("%-15s : %s\n", "Error", "InValue be Duplicated.");
 				return false;
 			}
-		}
-	}
+		} // while
+
+		std::printf("%-15s : %s\n", "Error", "Undefined.");
+		return false;
+	} // Insert
 };
