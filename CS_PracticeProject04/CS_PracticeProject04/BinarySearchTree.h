@@ -257,5 +257,108 @@ public:
 
 		std::printf("%-15s : %s\n", "Error", "Undefined.");
 		return false;
+	} // Find
+
+public:
+	Node* FindLargestInSubTree(Node* InRootNode)
+	{
+		if (!InRootNode)
+		{
+			std::printf("%-15s : %s\n", "Error", "InValid InRootNode or Size == 0.");
+			return nullptr;
+		}
+
+		// Valid Root
+		Node* targetNode = InRootNode;
+		while (targetNode != nullptr)
+		{
+			if (targetNode->Right)
+			{
+				targetNode = targetNode->Right;
+			}
+			else // InValid Right Node
+			{
+				std::printf("%-15s : Root: %-5p | Node: %-5p | LastNodeValue: %-5d\n", "Find_Largest", InRootNode, targetNode, targetNode->Value);
+				return targetNode;
+			}
+		}
+		std::printf("%-15s : %s\n", "Error", "Undefined.");
+		return nullptr;
+	}
+
+public:
+	Node* FindSmallestInSubTree(Node* InRootNode)
+	{
+		if (!Root || (Size == 0))
+		{
+			std::printf("%-15s : %s\n", "Error", "InValid Root or Size == 0.");
+			return nullptr;
+		}
+
+		// Valid Root
+		Node* targetNode = Root;
+		while (targetNode != nullptr)
+		{
+			if (targetNode->Left)
+			{
+				targetNode = targetNode->Left;
+			}
+			else // InValid Right Node
+			{
+				std::printf("%-15s : Root: %-5p | Node: %-5p | LastNodeValue: %-5d\n", "Find_Smallest", InRootNode, targetNode, targetNode->Value);
+				return targetNode;
+			}
+		}
+		std::printf("%-15s : %s\n", "Error", "Undefined.");
+		return nullptr;
+	}
+
+public:
+	bool Erase(int InValue)
+	{
+		if (!Root || (Size == 0))
+		{
+			std::printf("%-15s : %s\n", "Error", "InValid Root or Size == 0.");
+			return false;
+		}
+
+		// Valid Root
+		Node* targetNode = Root;
+		while (targetNode != nullptr)
+		{
+			if (InValue < targetNode->Value)
+			{
+				if (!targetNode->Left)
+				{
+					std::printf("%-15s : InValue: %-5d | Node: %-5p | LastNodeValue: %-5d | InValid Direction: %-5s\n", "Erase_Failed", InValue, targetNode, targetNode->Value, "Left");
+					return false;
+				}
+				else // Valid targetNode->Left
+				{
+					targetNode = targetNode->Left;
+					continue;
+				}
+			}
+			else if (InValue > targetNode->Value)
+			{
+				if (!targetNode->Right)
+				{
+					std::printf("%-15s : InValue: %-5d | Node: %-5p | LastNodeValue: %-5d | InValid Direction: %-5s\n", "Erase_Failed", InValue, targetNode, targetNode->Value, "Right");
+					return false;
+				}
+				else // Valid targetNode->Left
+				{
+					targetNode = targetNode->Right;
+					continue;
+				}
+			}
+			else // Value == targetNode->Value
+			{
+				// TODO
+			}
+		} // while
+
+		std::printf("%-15s : %s\n", "Error", "Undefined.");
+		return false;
 	}
 };
