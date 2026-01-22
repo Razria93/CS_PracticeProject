@@ -13,6 +13,10 @@ int main()
 	bst.Insert(200);
 	bst.Insert(100);
 
+	std::printf("\n[Find]\n");
+	bst.Find(10);
+	bst.Find(100);
+	bst.Find(300);
 
 	std::printf("\n[Clear]\n");
 	if (bst.Clear())

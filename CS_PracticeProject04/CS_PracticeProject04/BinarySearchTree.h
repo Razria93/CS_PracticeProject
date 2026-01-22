@@ -208,4 +208,54 @@ public:
 		std::printf("%-15s : %s\n", "Error", "Undefined.");
 		return false;
 	} // Insert
+
+public:
+	bool Find(int InValue)
+	{
+		if (!Root || (Size == 0))
+		{
+			std::printf("%-15s : %s\n", "Error", "InValid Root or Size == 0.");
+			return false;
+		}
+
+		// Valid Root
+		Node* targetNode = Root;
+		while (targetNode != nullptr)
+		{
+			if (InValue < targetNode->Value)
+			{
+				if (!targetNode->Left)
+				{
+					std::printf("%-15s : InValue: %-5d | Node: %-5p | LastNodeValue: %-5d | InValid Direction: %-5s\n", "Find_Failed", InValue, targetNode, targetNode->Value, "Left");
+					return false;
+				}
+				else // Valid targetNode->Left
+				{
+					targetNode = targetNode->Left;
+					continue;
+				}
+			}
+			else if (InValue > targetNode->Value)
+			{
+				if (!targetNode->Right)
+				{
+					std::printf("%-15s : InValue: %-5d | Node: %-5p | LastNodeValue: %-5d | InValid Direction: %-5s\n", "Find_Failed", InValue, targetNode, targetNode->Value, "Right");
+					return false;
+				}
+				else // Valid targetNode->Left
+				{
+					targetNode = targetNode->Right;
+					continue;
+				}
+			}
+			else // Value == targetNode->Value
+			{
+				std::printf("%-15s : InValue: %-5d | Node: %-5p | LastNodeValue: %-5d\n", "Find_Complete", InValue, targetNode, targetNode->Value);
+				return true;
+			}
+		} // while
+
+		std::printf("%-15s : %s\n", "Error", "Undefined.");
+		return false;
+	}
 };
