@@ -15,3 +15,13 @@ public:
 	{
 	}
 };
+
+class BinarySearchTree
+{
+public:
+	Node* Root = nullptr;
+	size_t Size = 0;
+
+public:
+	BinarySearchTree() = default;
+};
