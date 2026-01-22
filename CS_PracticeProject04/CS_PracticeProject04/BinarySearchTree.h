@@ -34,6 +34,12 @@ public:
 
 public:
 	BinarySearchTree() = default;
+
+	~BinarySearchTree()
+	{
+		std::printf("\n[Destructor]\n");
+		Clear();
+	}
 	
 public:
 	bool Clear()
