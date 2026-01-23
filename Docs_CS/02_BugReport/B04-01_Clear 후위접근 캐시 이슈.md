@@ -9,7 +9,7 @@
 - 버그
 
 ### 진행상태
-- [ ] 미해결
+- [x] 해결
 
 ### 브랜치명
 - feature/binary-search-tree
@@ -34,6 +34,7 @@
 
 ## 이슈재현
 
+`main.cpp`
 ```cpp
 // main.cpp
 BinarySearchTree bst;
@@ -48,6 +49,7 @@ bst.Insert(400);
 bst.Clear();
 ```
 
+`BinarySearchTee.h`
 ```cpp
 // BinarySearchTree.h
 Node* targetNode = Root;
@@ -121,12 +123,94 @@ C:\Mentoring\PracticeProject\CS_PracticeProject04\x64\Debug\CS_PracticeProject04
 - 재귀 기반 `Clear()` 구현 후 동일 입력으로 실행
 - 모든 노드가 순차적으로 삭제되며, 프로세스가 정상 종료되는지 확인
 
+`main.cpp`
 ```cpp
-// Example
+// main.cpp
+int main()
+{
+	std::printf("\n[Clear]\n");
+	if (bst.Clear())
+	{
+		std::printf("[Clear_Complete]\n");
+	}
+	else
+	{
+		std::printf("[Clear_Failed]\n");
+	}
+	
+	return 0;
+}
+```
+
+`BinarySearchTee.h`
+```cpp
+// BinarySearchTee.h
+public:
+	bool Clear()
+	{
+		bool result = Clear(Root);
+		
+		Root = nullptr;
+		Size = 0;
+		
+		return result;
+	}
+		
+	bool Clear(Node* InNode)
+	{
+		if (!InNode) return false; // this Node is NULL
+				
+		if (Clear(InNode->Left))
+		{
+			std::printf(
+			"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+			"Clear_Left", InNode->Value, InNode, InNode->Left, InNode->Parent);
+		}
+		else
+		{
+			std::printf(
+			"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+			"InValid_Left", InNode->Value, InNode, InNode->Left, InNode->Parent);
+		}
+
+		if (Clear(InNode->Right))
+		{
+			std::printf(
+			"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+			"Clear_Right", InNode->Value, InNode, InNode->Right, InNode->Parent);
+		}
+		else
+		{
+			std::printf(
+			"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+			"InValid_Right", InNode->Value, InNode, InNode->Right, InNode->Parent);
+		}
+		
+		Delete(InNode);
+		
+		return true;
+	}
+```
+
+
+---
+
+## 실행결과
+```cpp
 [Clear]
-Complete_Delete : ...
-...
-Complete_Clear  : Root: 0000000000000000 | Size: 0
+InValid_Left    : CurNodeValue: 50    | CurNode: 0000018C454C30E0 | Target: 0000000000000000 | Parent: 0000018C454C2C00
+InValid_Right   : CurNodeValue: 50    | CurNode: 0000018C454C30E0 | Target: 0000000000000000 | Parent: 0000018C454C2C00
+Clear_Left      : CurNodeValue: 100   | CurNode: 0000018C454C2C00 | Target: 0000018C454C30E0 | Parent: 0000018C454C2A80
+InValid_Left    : CurNodeValue: 200   | CurNode: 0000018C454C2AE0 | Target: 0000000000000000 | Parent: 0000018C454C2C00
+InValid_Right   : CurNodeValue: 200   | CurNode: 0000018C454C2AE0 | Target: 0000000000000000 | Parent: 0000018C454C2C00
+Clear_Right     : CurNodeValue: 100   | CurNode: 0000018C454C2C00 | Target: 0000018C454C2AE0 | Parent: 0000018C454C2A80
+Clear_Left      : CurNodeValue: 300   | CurNode: 0000018C454C2A80 | Target: 0000018C454C2C00 | Parent: 0000000000000000
+InValid_Left    : CurNodeValue: 400   | CurNode: 0000018C454C2C60 | Target: 0000000000000000 | Parent: 0000018C454C2F00
+InValid_Right   : CurNodeValue: 400   | CurNode: 0000018C454C2C60 | Target: 0000000000000000 | Parent: 0000018C454C2F00
+Clear_Left      : CurNodeValue: 500   | CurNode: 0000018C454C2F00 | Target: 0000018C454C2C60 | Parent: 0000018C454C2A80
+InValid_Right   : CurNodeValue: 500   | CurNode: 0000018C454C2F00 | Target: 0000000000000000 | Parent: 0000018C454C2A80
+Clear_Right     : CurNodeValue: 300   | CurNode: 0000018C454C2A80 | Target: 0000018C454C2F00 | Parent: 0000000000000000
+[Clear_Complete]
 ```
 
 

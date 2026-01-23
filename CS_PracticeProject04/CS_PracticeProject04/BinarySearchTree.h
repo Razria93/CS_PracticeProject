@@ -2,13 +2,6 @@
 
 #include <cstdio>
 
-enum ECacheDirection
-{
-	None = 0,
-	Left,
-	Right,
-};
-
 struct Node
 {
 public:
@@ -48,88 +41,59 @@ public:
 public:
 	bool Clear()
 	{
-		Node* targetNode = Root;
-		ECacheDirection cacheDirection = ECacheDirection::None;
+		bool result = Clear(Root);
 
-		while (targetNode != nullptr)
-		{
-			if (targetNode->Left)
-			{
-				cacheDirection = ECacheDirection::Left;
-				targetNode = targetNode->Left;
-			}
-			else if (targetNode->Right)
-			{
-				cacheDirection = ECacheDirection::Right;
-				targetNode = targetNode->Right;
-			}
-			else
-			{
-				Node* parent = targetNode->Parent;
+		Root = nullptr;
+		Size = 0;
 
-				if (!parent)
-				{
-					if (targetNode != Root)
-					{
-						std::printf("%-15s : %s\n", "Error", "InValid Parent.");
-						return false;
-					}
-
-					// targetNode == Root
-
-					Delete(Root);
-
-					Root = nullptr;
-					Size = 0;
-
-					std::printf("%-15s : Root: %p | Size: %-5zd\n", "Complete_Clear", Root, Size);
-					return true;
-				}
-
-				// Valid Parent
-				Delete(targetNode);
-				--Size;
-
-				std::printf("%-15s : Target: %p | Size: %-5zd\n", "Complete_Delete", targetNode, Size);
-
-				if (cacheDirection == ECacheDirection::Left)
-				{
-					std::printf("%-15s : Parent->Left: %p\n", "Child_Before", parent->Left);
-
-					parent->Left = nullptr;
-					targetNode = parent;
-
-					std::printf("%-15s : Parent->Left: %p\n\n", "Child_After", parent->Left);
-				}
-				else if (cacheDirection == ECacheDirection::Right)
-				{
-					std::printf("%-15s : Parent->Right: %p\n", "Child_Before", parent->Right);
-
-					parent->Right = nullptr;
-					targetNode = parent;
-
-					std::printf("%-15s : Parent->Right: %p\n\n", "Child_After", parent->Right);
-				}
-				else
-				{
-					targetNode = parent;
-				}
-			} // else
-		} // while
-
-		std::printf("%-15s : %s\n", "InValid", "InValid Node in BST.");
-		return false;
+		return result;
 	}
 
+	bool Clear(Node* InNode)
+	{
+		if (!InNode)
+		{
+			return false; // this Node is NULL
+		}
+
+		if (Clear(InNode->Left))
+		{
+			std::printf(
+				"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+				"Clear_Left", InNode->Value, InNode, InNode->Left, InNode->Parent);
+		}
+		else
+		{
+			std::printf(
+				"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+				"InValid_Left", InNode->Value, InNode, InNode->Left, InNode->Parent);
+		}
+
+		if (Clear(InNode->Right))
+		{
+			std::printf(
+				"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+				"Clear_Right", InNode->Value, InNode, InNode->Right, InNode->Parent);
+		}
+		else
+		{
+			std::printf(
+				"%-15s : CurNodeValue: %-5d | CurNode: %p | Target: %p | Parent: %p\n",
+				"InValid_Right", InNode->Value, InNode, InNode->Right, InNode->Parent);
+		}
+
+		Delete(InNode);
+
+		return true;
+	}
+
+public:
 	void Delete(Node* InNode)
 	{
-		std::printf("%-15s : Parent: %p | Node: %p | NodeValue: %-5d\n", "Delete_Before", InNode->Parent, InNode, InNode->Value);
-
 		InNode->Parent = nullptr;
 		InNode->Left = nullptr;
 		InNode->Right = nullptr;
-
-		std::printf("%-15s : Parent: %p | Node: %p | NodeValue: %-5d\n", "Delete_After", InNode->Parent, InNode, InNode->Value);
+		InNode->Value = 0;
 
 		delete InNode;
 	}
