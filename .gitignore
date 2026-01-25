@@ -12,3 +12,4 @@ Release/
 ############################
 # Obsidian 내부 설정 파일 제외
 Docs_CS/.obsidian/
+Docs_CS/ignore/
