@@ -17,31 +17,35 @@ int main()
 	bst.Insert(25);
 	bst.Insert(75);
 
-	// std::printf("\n[Find]\n");
-	// Node* find_before = bst.Find(100);
-	// std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "Find_Result", find_before, find_before ? find_before->Value : -1);
-	// 
-	// Node* largest = bst.FindLargest();
-	// std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "FindLargest", largest, largest ? largest->Value : -1);
-	// 
-	// Node* smallest = bst.FindSmallest();
-	// std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "FindSmallest", smallest, largest ? smallest->Value : -1);
+	std::printf("\n[Find]\n");
+	Node* find = bst.Find(100);
+	std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "Find_Result", find, find ? find->Value : -1);
+	
+	Node* largest = bst.FindLargest();
+	std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "FindLargest_Result", largest, largest ? largest->Value : -1);
+	
+	Node* smallest = bst.FindSmallest();
+	std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "FindSmallest_Result", smallest, largest ? smallest->Value : -1);
 
-	// std::printf("\n[Erase_0]\n");
-	// bool result_0 = bst.Erase(50);
-	// std::printf("\n%-20s : %s\n", "[Erase_Result]", result_0 ? "Complete" : "Fail");
-	// 
-	// std::printf("\n[Erase_1]\n");
-	// bool result_1 = bst.Erase(300);
-	// std::printf("\n%-20s : %s\n", "[Erase_Result]", result_1 ? "Complete" : "Fail");
-	// 
-	// std::printf("\n[Find_0]\n");
-	// Node* find_0 = bst.Find(50);
-	// std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "[Find_Result]", find_0, find_0 ? find_0->Value : -1);
-	// 
-	// std::printf("\n[Find_1]\n");
-	// Node* find_1 = bst.Find(300);
-	// std::printf("%-20s : Node: %-5p | InValue: %-5d\n", "[Find_Result]", find_1, find_1 ? find_1->Value : -1);
+	std::printf("\n[Erase_0]\n");
+	int inValue_erase0 = 50;
+	bool erase_0 = bst.Erase(inValue_erase0);
+	std::printf("%-20s : InValue: %-5d | Result: %-5s\n", "Erase_Result", inValue_erase0, erase_0 ? "Erase" : "NotErase");
+	
+	std::printf("\n[Erase_1]\n");
+	int inValue_erase1 = 300;
+	bool erase_1 = bst.Erase(inValue_erase1);
+	std::printf("%-20s : InValue: %-5d | Result: %-5s\n", "Erase_Result", inValue_erase1, erase_1 ? "Erase" : "NotErase");
+	
+	std::printf("\n[Find_0]\n");
+	int inValue_find0 = 50;
+	Node* find_0 = bst.Find(inValue_find0);
+	std::printf("%-20s : InValue: %-5d | Node: %-5p | Result: %-5s\n", "Find_Result", inValue_find0, find_0, find_0 ? "Found" : "NotFound");
+	
+	std::printf("\n[Find_1]\n");
+	int inValue_find1 = 300;
+	Node* find_1 = bst.Find(inValue_find1);
+	std::printf("%-20s : InValue: %-5d | Node: %-5p | Result: %-5s\n", "Find_Result", inValue_find1, find_1, find_1 ? "Found" : "NotFound");
 
 	std::printf("\n[TraversePreOrder]\n");
 	bst.TraversePreOrder();
@@ -52,11 +56,8 @@ int main()
 	std::printf("\n[TraversePostOrder]\n");
 	bst.TraversePostOrder();
 
-	// std::printf("\n[Clear]\n");
-	// if (bst.Clear())
-	// 	std::printf("[Clear_Complete]\n");
-	// else
-	// 	std::printf("[Clear_Failed]\n");
+	std::printf("\n[Clear]\n");
+	bst.Clear();
 
 	return 0;
 }

@@ -39,101 +39,42 @@ public:
 	bool Empty() const { return Size == 0; }
 
 public:
-	bool Clear()
+	void Clear()
 	{
-		bool result = Clear(Root);
+		Clear(Root);
 
 		Root = nullptr;
 		Size = 0;
-
-		return result;
 	}
 
-	bool Clear(Node* InNode)
+	void Clear(Node* InNode)
 	{
-		if (!InNode)
-		{
-			return false; // this Node is NULL
-		}
+		if (!InNode) return;
 
-		std::printf("%-20s : Value: %-11d | Node: %p\n", "TryClear_LNode", InNode->Value, InNode);
-		if (Clear(InNode->Left))
-		{
-			std::printf("------------------------------\n");
-			std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "CompleteClear_LNode", InNode->Value, InNode);
-			std::printf("%-20s   Parent: %p |[Left : %p]| Right : %p\n", "", InNode->Parent, InNode->Left, InNode->Right);
-			std::printf("------------------------------\n");
-		}
-		else
-		{
-			std::printf("%-20s\n", "InValid_LeftNode");
-		}
-
-		std::printf("%-20s : Value: %-11d | Node: %p\n", "TryClear_RNode", InNode->Value, InNode);
-		if (Clear(InNode->Right))
-		{
-			std::printf("------------------------------\n");
-			std::printf("%-20s : OwerValue: %-11d | OwerNode: %p\n", "CompleteClear_RNode", InNode->Value, InNode);
-			std::printf("%-20s   Parent: %p | Left : %p |[Right : %p]\n", "", InNode->Parent, InNode->Left, InNode->Right);
-			std::printf("------------------------------\n");
-		}
-		else
-		{
-			std::printf("%-20s\n", "InValid_RightNode");
-		}
-
-		std::printf("------------------------------\n");
-		std::printf("%-20s : CurValue: %-11d | CurNode: %p\n", "TryClear_CNode", InNode->Value, InNode);
+		Clear(InNode->Left);
+		Clear(InNode->Right);
 		Delete(InNode);
-		std::printf("%-20s : CurValue: %-11d | CurNode: %p\n", "CompleteClear_CNode", InNode->Value, InNode);
-		std::printf("%-20s   Parent: %p | Left : %p | Right : %p\n", "", InNode->Parent, InNode->Left, InNode->Right);
-		std::printf("------------------------------\n");
-
-		return true;
 	}
 
 public:
 	void Delete(Node* InNode)
 	{
-		std::printf("\n[Delete Before]\n");
-		std::printf("%-20s : CurValue: %-11d | CurNode: %p\n", "Delete_BF", InNode->Value, InNode);
-		std::printf("%-20s   Parent: %p | Left : %p | Right : %p\n", "", InNode->Parent, InNode->Left, InNode->Right);
-
 		if (Node* parentNode = InNode->Parent)
 		{
-			std::printf("[Delete ParentCache Before]\n");
-			std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "Delete_BF", parentNode->Value, parentNode);
-			std::printf("%-20s   Parent: %p | Left : %p | Right : %p\n", "", parentNode->Parent, parentNode->Left, parentNode->Right);
-
 			if (InNode == parentNode->Left)
 			{
 				parentNode->Left = nullptr;
 			}
-			else if (InNode == InNode->Parent->Right)
+			else if (InNode == parentNode->Right)
 			{
 				parentNode->Right = nullptr;
 			}
-			std::printf("[Delete ParentCache After]\n");
-			std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "Delete_AF", parentNode->Value, parentNode);
-			std::printf("%-20s   Parent: %p | Left : %p | Right : %p\n", "", parentNode->Parent, parentNode->Left, parentNode->Right);
-
 		}
-		else // bIsRoot?
+		else // bIsRoot == true
 		{
 			if (InNode == Root)
 				Root = nullptr;
-
-			std::printf("%-20s : %s\n", "NOTE", "Root Delete");
 		}
-
-		InNode->Parent = nullptr;
-		InNode->Left = nullptr;
-		InNode->Right = nullptr;
-		InNode->Value = 0;
-
-		std::printf("[Delete After]\n");
-		std::printf("%-20s : CurValue: %-11d | CurNode: %p\n", "Delete_AF", InNode->Value, InNode);
-		std::printf("%-20s   Parent: %p | Left : %p | Right : %p\n", "", InNode->Parent, InNode->Left, InNode->Right);
 
 		delete InNode;
 	}
@@ -159,7 +100,8 @@ public:
 			Root = node;
 			++Size;
 
-			std::printf("%-20s : Parent: %p | Node: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Root", node->Parent, node, node->Value, Size);
+			std::printf("%-20s : newNode: %-5p | newValue: %-5d | Size: %-5zd\n", "Insert_Root", node, node->Value, Size);
+
 			return true;
 		}
 
@@ -176,7 +118,8 @@ public:
 					node->Parent = targetNode;
 					++Size;
 
-					std::printf("%-20s : Parent: %p | Node: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Left", node->Parent, node, node->Value, Size);
+					std::printf("%-20s : newNode: %-5p | newValue: %-5d | Parent: %-5p | ParentValue: %-5d | Size: %-5zd\n", "Insert_Left", node, node->Value, targetNode, targetNode->Value, Size);
+
 					return true;
 				}
 				else // Valid targetNode->Left
@@ -193,7 +136,8 @@ public:
 					node->Parent = targetNode;
 					++Size;
 
-					std::printf("%-20s : Parent: %p | Node: %p | NodeValue: %-5d | Size: %zd\n", "Insert_Right", node->Parent, node, node->Value, Size);
+					std::printf("%-20s : newNode: %-5p | newValue: %-5d | Parent: %-5p | ParentValue: %-5d | Size: %-5zd\n", "Insert_Right", node, node->Value, targetNode, targetNode->Value, Size);
+
 					return true;
 				}
 				else // Valid targetNode->Left
@@ -204,7 +148,7 @@ public:
 			}
 			else // node->Value == targetNode->Value
 			{
-				std::printf("%-20s : %s\n", "Error", "InValue be Duplicated.");
+				delete node;
 				return false;
 			}
 		} // while
@@ -226,17 +170,13 @@ public:
 
 	Node* Find(int InValue, Node* InNode)
 	{
-		if (!InNode)
-		{
-			std::printf("%-20s : %s\n", "Error", "InValid InNode.");
-			return nullptr;
-		}
+		if (!InNode) return nullptr;
 
 		if (InValue == InNode->Value) return InNode;
 		if (InValue < InNode->Value) return Find(InValue, InNode->Left);
 		if (InValue > InNode->Value) return Find(InValue, InNode->Right);
 
-		std::printf("Undefined");
+		std::printf("%-20s : %s\n", "Error", "Undefined.");
 		return nullptr;
 	} // Find
 
@@ -305,8 +245,6 @@ public:
 
 			if (largest && smallest)
 			{
-				std::printf("%-20s : InNodeValue: %-11d | LargestValue Of LeftNode: %-11d | SmallestValue Of RghtNode: %-11d\n", "ValueCompation", InNode->Value, largest->Value, smallest->Value);
-
 				if ((largest->Value - InNode->Value) >= (InNode->Value - smallest->Value))
 				{
 					switchNode = smallest;
@@ -319,32 +257,6 @@ public:
 
 			Node* oldParentNode = switchNode->Parent ? switchNode->Parent : nullptr;
 			Node* newParentNode = eraseNode->Parent ? eraseNode->Parent : nullptr;
-
-			std::printf("\n[Erase Before]\n");
-			if (oldParentNode)
-			{
-				std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "OldParentNode", oldParentNode->Value, oldParentNode);
-				std::printf("%-20s   Parent: %p | Left : %p |[Right : %p]\n", "", oldParentNode->Parent, oldParentNode->Left, oldParentNode->Right);
-			}
-			else
-			{
-				std::printf("OldParentNode InValid\n");
-			}
-
-			if (newParentNode)
-			{
-				std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "NewParentNode", newParentNode->Value, newParentNode);
-				std::printf("%-20s   Parent: %p |[Left : %p]| Right : %p\n", "", newParentNode->Parent, newParentNode->Left, newParentNode->Right);
-			}
-			else
-			{
-				std::printf("NewParentNode InValid\n");
-			}
-
-
-			std::printf("%-20s : SwitchValue: %-11d | SwitchNode: %p\n", "SwicthNode", switchNode->Value, switchNode);
-			std::printf("%-20s  [Parent: %p]| Left : %p | Right : %p\n", "", switchNode->Parent, switchNode->Left, switchNode->Right);
-			std::printf("%-20s : %zd\n", "Size", Size);
 
 			bool bRight = false;
 			bool bLeft = false;
@@ -415,39 +327,13 @@ public:
 
 			--Size;
 
-			std::printf("\n[Erase After]\n");
-			if (oldParentNode)
-			{
-				std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "OldParentNode", oldParentNode->Value, oldParentNode);
-				std::printf("%-20s   Parent: %p | Left : %p |[Right : %p]\n", "", oldParentNode->Parent, oldParentNode->Left, oldParentNode->Right);
-			}
-			else
-			{
-				std::printf("OldParentNode InValid\n");
-			}
-
-			if (newParentNode)
-			{
-				std::printf("%-20s : ParentValue: %-11d | ParentNode: %p\n", "NewParentNode", newParentNode->Value, newParentNode);
-				std::printf("%-20s   Parent: %p |[Left : %p]| Right : %p\n", "", newParentNode->Parent, newParentNode->Left, newParentNode->Right);
-			}
-			else
-			{
-				std::printf("NewParentNode InValid\n");
-			}
-
-			std::printf("%-20s : SwitchValue: %-11d | SwitchNode: %p\n", "SwicthNode", switchNode->Value, switchNode);
-			std::printf("%-20s  [Parent: %p]| Left : %p | Right : %p\n", "", switchNode->Parent, switchNode->Left, switchNode->Right);
-			std::printf("%-20s : %zd\n", "Size", Size);
-
-
 			return true;
 		}
 
 		if (InValue < InNode->Value) return Erase(InValue, InNode->Left);
 		if (InValue > InNode->Value) return Erase(InValue, InNode->Right);
 
-		std::printf("Undefined");
+		std::printf("%-20s : %s\n", "Error", "Undefined.");
 		return false;
 	} // Erase
 
@@ -456,33 +342,27 @@ public:
 	{
 		if (!Root)
 		{
-			std::printf("%-20s : %s\n", "NOTE", "InValid Root.");
+			std::printf("%-20s : %s\n", "Error", "InValid Root.");
 			return;
 		}
 
 		TraversePreOrder(Root);
-
-		std::printf("[Root: %d]: %-20s \n", Root->Value, "TraversePreOrder_Complete");
 	}
 
 	bool TraversePreOrder(Node* InNode)
 	{
 		if (!InNode)
 		{
-			std::printf("%-20s : %s\n", "NOTE", "InValid InNode.");
+			// std::printf("%-20s : %s\n", "NOTE", "InValid InNode.");
 			return false;
 		}
 
+		// PreOrder
 		std::printf("%-20s : NodeValue: %-11d | NodeNode: %p | ParentNode: %p | LeftNode: %p | RightNode: %p\n", "PreOrder_Cur", InNode->Value, InNode, InNode->Parent, InNode->Left, InNode->Right);
-		if (TraversePreOrder(InNode->Left))
-		{
-			std::printf("[Node: %d]: %-20s \n", InNode->Value, "PreOrder_L_Complete");
-		}
-		if (TraversePreOrder(InNode->Right))
-		{
-			std::printf("[Node: %d]: %-20s \n", InNode->Value, "PreOrder_R_Complete");
 
-		}
+		TraversePreOrder(InNode->Left);
+
+		TraversePreOrder(InNode->Right);
 
 		return true;
 	}
@@ -492,35 +372,27 @@ public:
 	{
 		if (!Root)
 		{
-			std::printf("%-20s : %s\n", "NOTE", "InValid Root.");
+			std::printf("%-20s : %s\n", "Error", "InValid Root.");
 			return;
 		}
 
 		TraverseInOrder(Root);
-
-		std::printf("[Root: %d]: %-20s \n", Root->Value, "TraverseInOrder_Complete");
 	}
 
 	bool TraverseInOrder(Node* InNode)
 	{
 		if (!InNode)
 		{
-			std::printf("%-20s : %s\n", "NOTE", "InValid InNode.");
+			// std::printf("%-20s : %s\n", "NOTE", "InValid InNode.");
 			return false;
 		}
 
-		if (TraverseInOrder(InNode->Left))
-		{
-			std::printf("[Node: %d]: %-20s \n", InNode->Value, "InOrder_L_Complete");
-		}
+		TraverseInOrder(InNode->Left);
 
+		// InOrder
 		std::printf("%-20s : NodeValue: %-11d | NodeNode: %p | ParentNode: %p | LeftNode: %p | RightNode: %p\n", "InOrder_Cur", InNode->Value, InNode, InNode->Parent, InNode->Left, InNode->Right);
 
-		if (TraverseInOrder(InNode->Right))
-		{
-			std::printf("[Node: %d]: %-20s \n", InNode->Value, "InOrder_R_Complete");
-
-		}
+		TraverseInOrder(InNode->Right);
 
 		return true;
 	}
@@ -530,35 +402,27 @@ public:
 	{
 		if (!Root)
 		{
-			std::printf("%-20s : %s\n", "NOTE", "InValid Root.");
+			std::printf("%-20s : %s\n", "Error", "InValid Root.");
 			return;
 		}
 
 		TraversePostOrder(Root);
-
-		std::printf("[Root: %d]: %-20s \n", Root->Value, "TraversePostOrder_Complete");
 	}
 
 	bool TraversePostOrder(Node* InNode)
 	{
 		if (!InNode)
 		{
-			std::printf("%-20s : %s\n", "NOTE", "InValid InNode.");
+			// std::printf("%-20s : %s\n", "NOTE", "InValid InNode.");
 			return false;
 		}
 
-		if (TraversePostOrder(InNode->Left))
-		{
-			std::printf("[Node: %d]: %-20s \n", InNode->Value, "InOrder_L_Complete");
-		}
+		TraversePostOrder(InNode->Left);
 
-		if (TraversePostOrder(InNode->Right))
-		{
-			std::printf("[Node: %d]: %-20s \n", InNode->Value, "InOrder_R_Complete");
+		TraversePostOrder(InNode->Right);
 
-		}
-
-		std::printf("%-20s : NodeValue: %-11d | NodeNode: %p | ParentNode: %p | LeftNode: %p | RightNode: %p\n", "InOrder_Cur", InNode->Value, InNode, InNode->Parent, InNode->Left, InNode->Right);
+		// PostOrder
+		std::printf("%-20s : NodeValue: %-11d | NodeNode: %p | ParentNode: %p | LeftNode: %p | RightNode: %p\n", "PostOrder_Cur", InNode->Value, InNode, InNode->Parent, InNode->Left, InNode->Right);
 
 		return true;
 	}
