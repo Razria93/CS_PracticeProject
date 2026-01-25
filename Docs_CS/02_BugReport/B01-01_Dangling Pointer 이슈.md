@@ -56,21 +56,32 @@ else
 temp is not nullptr
 ```
 
+
+---
+
 ## 근본 원인
 
 1. delete는 할당된 메모리만 해제하며, 포인터 변수(temp) 자체의 값을 변경하지 않음
+
 2. 따라서 포인터는 해제된 메모리를 가리키는 Dangling Pointer 상태가 됨
+
 3. 이후 nullptr check가 의도와 다르게 진행되어 잘못된 포인터 접근이 발생함
+
+
+---
 
 ## 수정
 
-포인터 `delete` 후 명시적으로 nullptr 대입
+포인터 `delete` 후 명시적으로 `nullptr` 대입
 ```cpp
 Monster* temp = new Monster;
 
 delete temp;
 temp = nullptr;   
 ```
+
+
+---
 
 ## 수정확인
 
@@ -90,7 +101,13 @@ else
 }
 ```
 
+
+---
+
 ## 실행결과
-```
+```cpp
 temp is nullptr
 ```
+
+
+---

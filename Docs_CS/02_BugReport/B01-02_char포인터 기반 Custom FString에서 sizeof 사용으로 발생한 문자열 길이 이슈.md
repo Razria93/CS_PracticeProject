@@ -65,6 +65,9 @@ void Monster::Set_Name(const char* InName)
 Name: MONSTERN袴袴袴袴袴袴袴袴
 ```
 
+
+---
+
 ## 근본 원인
 
 **`sizeof(InName)`의 잘못된 사용**
@@ -82,6 +85,9 @@ Name: MONSTERN袴袴袴袴袴袴袴袴
 **이후 문자열 비교 / 출력 과정에서 예측 불가능한 동작 발생**
 - 버퍼 범위를 침범해 Undefined Behavior 발생 가능
 
+
+---
+
 ## 수정
 
 문자열 길이를 외부에서 직접 전달받는 구조로 변경
@@ -97,7 +103,11 @@ void Monster::Set_Name(const char* InName, uint64_t InSize)
 }
 ```
 
+
+---
+
 ## 수정확인
+
 `main`
 ```cpp
 monster->Set_Name("MONSTERNAME", sizeof("MONSTERNAME"));
@@ -116,7 +126,13 @@ void Monster::Set_Name(const char* InName, uint64_t InSize)
 }
 ```
 
+
+---
+
 ## 실행결과
-```
+```cpp
 MONSTERNAME
 ```
+
+
+---
