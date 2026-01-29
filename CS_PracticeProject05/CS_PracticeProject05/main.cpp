@@ -11,5 +11,7 @@ int main()
 	stack->Push(3);
 	stack->Push(4);
 
+	delete stack;
+	
 	return 0;
 }

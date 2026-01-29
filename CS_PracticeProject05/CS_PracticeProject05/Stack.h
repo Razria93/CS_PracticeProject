@@ -27,7 +27,7 @@ public:
 
 	~Stack()
 	{
-		// TODO: Clear
+		Clear();
 	}
 
 public:
@@ -62,4 +62,50 @@ public:
 		return;
 	}
 
+public:
+	void Clear()
+	{
+		while (Top)
+		{
+			if (Top == Base)
+			{
+				Top->Value = 0;
+				Top->Next = nullptr;
+				Top->Prev = nullptr;
+
+				delete Top;
+
+				Base = nullptr;
+				Top = nullptr;
+				Size = 0;
+
+				printf("[%s]%-20s", "Complete", "Clear");
+				return;
+			}
+
+			Node* nextTop = Top->Prev;
+
+			Top->Value = 0;
+			Top->Next = nullptr;
+			Top->Prev = nullptr;
+
+			delete Top;
+
+			--Size;
+
+			if (nextTop)
+			{
+				nextTop->Next = nullptr;
+				Top = nextTop;
+			}
+			else
+			{
+				Top = nullptr;
+				printf("[%s]%-20s", "Error", "Undefined");
+			}
+		}
+
+		printf("[%s]%-20s", "Error", "Undefined");
+		return;
+	}
 };
