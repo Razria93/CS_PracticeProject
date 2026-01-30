@@ -115,6 +115,19 @@ public:
 	}
 
 public:
+	bool Peek(int& OutValue)
+	{
+		if (!Base || !Top)
+		{
+			printf("[%s/%s]%-20s\n", "Error", "Peek", "InValid peekable node.");
+			return false;
+		}
+
+		OutValue = Top->Value;
+		return true;
+	}
+
+public:
 	void Clear()
 	{
 		while (Top)

@@ -15,6 +15,16 @@ int main()
 	stack->Pop();
 	stack->Pop();
 
+	int outValue = 0;
+	if (stack->Peek(outValue))
+	{
+		printf("[%s]%-20s: %d\n", "main", "PeekValue", outValue);
+	}
+	else
+	{
+		printf("[%s]%-20s: %s\n", "main", "PeekValue", "Failed");
+	}
+
 	delete stack;
 	
 	return 0;
