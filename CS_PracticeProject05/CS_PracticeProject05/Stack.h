@@ -31,6 +31,10 @@ public:
 	}
 
 public:
+	bool IsEmpty() { return Size == 0; }
+	size_t GetSize() { return Size; }
+
+public:
 	void Push(int InValue)
 	{
 		Node* newNode = new Node;

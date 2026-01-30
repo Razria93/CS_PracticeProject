@@ -11,6 +11,9 @@ int main()
 	stack->Push(3);
 	stack->Push(4);
 
+	printf("[%s]%-20s: %zd\n", "main", "Size", stack->GetSize());
+	printf("[%s]%-20s: %s\n", "main", "IsEmpty", stack->IsEmpty() ? "True" : "False");
+
 	stack->Pop();
 	stack->Pop();
 	stack->Pop();
