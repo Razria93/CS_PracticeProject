@@ -67,7 +67,7 @@ public:
 	{
 		if (!Base || !Top)
 		{
-			printf("[%s]%-20s", "Error", "InValid popable node");
+			printf("[%s/%s]%-20s\n", "Error", "Pop", "InValid popable node.");
 			return;
 		}
 
@@ -83,7 +83,7 @@ public:
 			Top = nullptr;
 			Size = 0;
 
-			printf("[%s]%-20s", "NOTE", "Base Pop");
+			printf("[%s/%s]%-20s\n", "Note", "Pop", "Pop Base. No more Value.");
 			return;
 		}
 
@@ -106,11 +106,11 @@ public:
 		else
 		{
 			Top = nullptr;
-			printf("[%s]%-20s", "Error", "Undefined");
+			printf("[%s/%s]%-20s\n", "Error", "Pop", "Undefined.");
 			return;
 		}
 
-		printf("[%s]%-20s", "Error", "Undefined");
+		printf("[%s/%s]%-20s\n", "Error", "Pop", "Undefined.");
 		return;
 	}
 
@@ -131,7 +131,7 @@ public:
 				Top = nullptr;
 				Size = 0;
 
-				printf("[%s]%-20s", "Complete", "Clear");
+				printf("[%s/%s]%-20s\n", "Note", "Clear", "Complete Clear.");
 				return;
 			}
 
@@ -154,12 +154,12 @@ public:
 			else
 			{
 				Top = nullptr;
-				printf("[%s]%-20s", "Error", "Undefined");
+				printf("[%s/%s]%-20s\n", "Error", "Clear", "Undefined.");
 				return;
 			}
 		}
 
-		printf("[%s]%-20s", "Error", "Undefined");
+		printf("[%s/%s]%-20s\n", "Error", "Clear", "Disable Clear.");
 		return;
 	}
 };
