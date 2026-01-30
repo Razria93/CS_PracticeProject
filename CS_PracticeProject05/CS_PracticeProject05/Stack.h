@@ -83,7 +83,7 @@ public:
 				return;
 			}
 
-			Node* nextTop = Top->Prev;
+			Node* nextTopNode = Top->Prev;
 
 			Top->Value = 0;
 			Top->Next = nullptr;
@@ -93,15 +93,17 @@ public:
 
 			--Size;
 
-			if (nextTop)
+			if (nextTopNode)
 			{
-				nextTop->Next = nullptr;
-				Top = nextTop;
+				nextTopNode->Next = nullptr;
+				Top = nextTopNode;
+				return;
 			}
 			else
 			{
 				Top = nullptr;
 				printf("[%s]%-20s", "Error", "Undefined");
+				return;
 			}
 		}
 
