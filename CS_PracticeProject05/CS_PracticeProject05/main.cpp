@@ -11,6 +11,10 @@ int main()
 	stack->Push(3);
 	stack->Push(4);
 
+	stack->Pop();
+	stack->Pop();
+	stack->Pop();
+
 	delete stack;
 	
 	return 0;

@@ -63,6 +63,58 @@ public:
 	}
 
 public:
+	void Pop()
+	{
+		if (!Base || !Top)
+		{
+			printf("[%s]%-20s", "Error", "InValid popable node");
+			return;
+		}
+
+		if (Top == Base)
+		{
+			Top->Value = 0;
+			Top->Next = nullptr;
+			Top->Prev = nullptr;
+
+			delete Top;
+
+			Base = nullptr;
+			Top = nullptr;
+			Size = 0;
+
+			printf("[%s]%-20s", "NOTE", "Base Pop");
+			return;
+		}
+
+		Node* nextTopNode = Top->Prev;
+
+		Top->Value = 0;
+		Top->Next = nullptr;
+		Top->Prev = nullptr;
+
+		delete Top;
+
+		--Size;
+
+		if (nextTopNode)
+		{
+			nextTopNode->Next = nullptr;
+			Top = nextTopNode;
+			return;
+		}
+		else
+		{
+			Top = nullptr;
+			printf("[%s]%-20s", "Error", "Undefined");
+			return;
+		}
+
+		printf("[%s]%-20s", "Error", "Undefined");
+		return;
+	}
+
+public:
 	void Clear()
 	{
 		while (Top)
