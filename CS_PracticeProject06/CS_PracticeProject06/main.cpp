@@ -16,6 +16,11 @@ void PrintFindResult(size_t InKey, int InValue, Node* InResult)
 	}
 }
 
+void PrintRemoveResult(size_t InKey, int InValue, bool InResult)
+{
+	printf("[%s/%s] %s: %s | key: %zd | value: %d\n", "Note", "main", "IsRemove", InResult ? "Contain" : "Not Contain", InKey, InValue);
+}
+
 int main()
 {
 	HashTable* hashTable = new HashTable;
@@ -53,13 +58,27 @@ int main()
 	Node* find2 = hashTable->Find(1, 300);
 	PrintFindResult(1, 300, find2);
 
-	printf("\n");
+	printf("\n[Find_Remove Before]\n");
 	Node* find3 = hashTable->Find(1, 100);
 	PrintFindResult(1, 100, find3);
 
 	printf("\n");
 	Node* find4 = hashTable->Find(11, 100);
 	PrintFindResult(11, 100, find4);
+
+	printf("\n[Remove]\n");
+	bool remove0 = hashTable->Remove(2, 300);
+	PrintRemoveResult(2, 300, remove0);
+
+	bool remove1 = hashTable->Remove(1, 100);
+	PrintRemoveResult(1, 100, remove1);
+
+	bool remove2 = hashTable->Remove(4, 5000);
+	PrintRemoveResult(4, 5000, remove2);
+
+	printf("\n[Find_Remove After]\n");
+	Node* find5 = hashTable->Find(11, 100);
+	PrintFindResult(11, 100, find5);
 
 	return 0;
 }
