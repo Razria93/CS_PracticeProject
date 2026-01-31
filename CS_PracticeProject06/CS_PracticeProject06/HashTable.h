@@ -49,9 +49,14 @@ public:
 
 	~Bucket()
 	{
+		Clear();
+
 		delete[] BaseNode;
+
+		BaseNode = nullptr;
 		Capacity = 0;
 		Size = 0;
+		LoadFactor = 0.f;
 	}
 
 public:
@@ -427,7 +432,11 @@ public:
 
 	~HashTable()
 	{
-		delete BaseBucket;
+		Clear();
+
+		delete[] BaseBucket;
+
+		BaseBucket = nullptr;
 	}
 
 public:
@@ -500,6 +509,6 @@ public:
 			return;
 		}
 
-		return BaseBucket->Clear();
+		BaseBucket->Clear();
 	}
 };
