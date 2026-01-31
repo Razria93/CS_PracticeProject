@@ -293,6 +293,34 @@ public:
 		return nullptr;
 	}
 
+public:
+	void Clear()
+	{
+		// [Policy] No duplicates allowed
+
+		if (!BaseNode)
+		{
+			printf("[%s/%s] %s\n", "Error", "Clear", "BaseBucket is invalid.");
+			return;
+		}
+
+		size_t count = 0;
+		Node* targetNode = BaseNode;
+
+		while (count < Capacity)
+		{
+			if (targetNode && targetNode->bExist)
+			{
+				DeleteNode(targetNode);
+			}
+			else
+			{
+				targetNode = targetNode + 1;
+				++count;
+			}
+		}
+	}
+
 private:
 	size_t GetHash(size_t InKey)
 	{
@@ -461,5 +489,17 @@ public:
 		}
 
 		return BaseBucket->Find(InKey, InValue);
+	}
+
+public:
+	void Clear()
+	{
+		if (!BaseBucket)
+		{
+			printf("[%s/%s] %s\n", "Error", "Remove", "BaseBucket is InValid.");
+			return;
+		}
+
+		return BaseBucket->Clear();
 	}
 };
