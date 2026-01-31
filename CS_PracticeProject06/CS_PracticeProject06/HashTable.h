@@ -3,8 +3,9 @@
 struct Node
 {
 	bool bExist;
-
 	size_t HashKey;
+
+	size_t Key; // Original Key
 	int Value;
 
 	Node* PrevNode;
@@ -15,6 +16,7 @@ public:
 	{
 		bExist = false;
 		HashKey = 0;
+		Key = 0;
 		Value = 0;
 		PrevNode = nullptr;
 		NextNode = nullptr;
@@ -24,6 +26,7 @@ public:
 	{
 		bExist = false;
 		HashKey = 0;
+		Key = 0;
 		Value = 0;
 		PrevNode = nullptr;
 		NextNode = nullptr;
@@ -52,7 +55,7 @@ public:
 	}
 
 public:
-	bool Insert(int InValue)
+	bool Insert(size_t InKey, int InValue)
 	{
 		// [Policy] No duplicates allowed (Set)
 
@@ -62,8 +65,7 @@ public:
 			return false;
 		}
 
-		size_t key = static_cast<size_t>(InValue);
-		size_t hashkey = GetHash(key);
+		size_t hashkey = GetHash(InKey);
 
 		Node* targetNodeInBucket = BaseNode + hashkey;
 
@@ -72,11 +74,13 @@ public:
 		{
 			targetNodeInBucket->bExist = true;
 			targetNodeInBucket->HashKey = hashkey;
+
+			targetNodeInBucket->Key = InKey;
 			targetNodeInBucket->Value = InValue;
 
 			++Size;
 
-			printf("[%s/%s] %s: %d | %s: %zd\n", "Complete", "Insert", "Insert complete", InValue, "Size", Size);
+			printf("[%s/%s] %s: <%zd, %d> | %s: %zd\n", "Complete", "Insert", "Insert complete", InKey, InValue, "Size", Size);
 			return true;
 		}
 
@@ -90,9 +94,14 @@ public:
 				return false;
 			}
 
+			if (targetNode->Key != InKey)
+			{
+				continue;
+			}
+
 			if (targetNode->Value == InValue)
 			{
-				printf("[%s/%s] %s\n", "Failed", "Insert", "Duplicate entries are not allowed.");
+				printf("[%s/%s] %s: <%zd, %d> | %s: %zd\n", "Failed", "Insert", "Duplicate entries are not allowed", InKey, InValue, "Size", Size);
 				return false;
 			}
 
@@ -102,6 +111,8 @@ public:
 
 				newNode->bExist = true;
 				newNode->HashKey = hashkey;
+
+				newNode->Key = InKey;
 				newNode->Value = InValue;
 
 				newNode->PrevNode = targetNode;
@@ -109,7 +120,7 @@ public:
 
 				++Size;
 
-				printf("[%s/%s] %s: %d | %s: %zd\n", "Complete", "Insert", "Insert complete", InValue, "Size", Size);
+				printf("[%s/%s] %s: <%zd, %d> | %s: %zd\n", "Complete", "Insert", "Insert complete", InKey, InValue, "Size", Size);
 				return true;
 			}
 			else
@@ -119,14 +130,14 @@ public:
 			}
 		}
 
-		printf("[%s/%s] %s\n", "Failed", "Insert", "Undefined");
+		printf("[%s/%s] %s\n", "Failed", "Insert", "Undefined.");
 		return false;
 	}
 
 public:
-	Node* Find(int InValue)
+	Node* Find(size_t InKey, int InValue)
 	{
-		// [Policy] No duplicates allowed (Set)
+		// [Policy] No duplicates allowed
 
 		if (!BaseNode)
 		{
@@ -134,15 +145,14 @@ public:
 			return nullptr;
 		}
 
-		size_t key = static_cast<size_t>(InValue);
-		size_t hashkey = GetHash(key);
+		size_t hashkey = GetHash(InKey);
 
 		Node* targetNodeInBucket = BaseNode + hashkey;
 
 		/* Case01: targetNodeInBucket->bExist == false */
 		if (!targetNodeInBucket->bExist)
 		{
-			printf("[%s/%s] %s\n", "Failed", "Find", "Invalid value in bucket");
+			printf("[%s/%s] %s\n", "Failed", "Find", "Invalid value in bucket.");
 			return nullptr;
 		}
 
@@ -174,7 +184,7 @@ public:
 			}
 		}
 
-		printf("[%s/%s] %s\n", "Failed", "Find", "Undefined");
+		printf("[%s/%s] %s\n", "Failed", "Find", "Undefined.");
 		return nullptr;
 	}
 
@@ -215,7 +225,7 @@ public:
 	}
 
 public:
-	bool Insert(int InValue)
+	bool Insert(size_t InKey, int InValue)
 	{
 		if (!BaseBucket)
 		{
@@ -223,11 +233,11 @@ public:
 			return false;
 		}
 
-		return BaseBucket->Insert(InValue);
+		return BaseBucket->Insert(InKey, InValue);
 	}
 
 public:
-	Node* Find(int InValue)
+	Node* Find(size_t InKey, int InValue)
 	{
 		if (!BaseBucket)
 		{
@@ -235,6 +245,6 @@ public:
 			return nullptr;
 		}
 
-		return BaseBucket->Find(InValue);
+		return BaseBucket->Find(InKey, InValue);
 	}
 };
