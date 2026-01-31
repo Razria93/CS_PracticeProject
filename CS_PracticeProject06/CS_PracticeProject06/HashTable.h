@@ -2,13 +2,19 @@
 
 struct Node
 {
+	bool bExist;
+
+	size_t HashKey;
 	int Value;
+
 	Node* PrevNode;
 	Node* NextNode;
 
 public:
 	Node()
 	{
+		bExist = false;
+		HashKey = 0;
 		Value = 0;
 		PrevNode = nullptr;
 		NextNode = nullptr;
@@ -16,6 +22,8 @@ public:
 
 	~Node()
 	{
+		bExist = false;
+		HashKey = 0;
 		Value = 0;
 		PrevNode = nullptr;
 		NextNode = nullptr;
@@ -25,18 +33,21 @@ public:
 struct Bucket
 {
 	Node* BaseNode;
+	size_t Capacity;
 	size_t Size;
 
 public:
 	Bucket(size_t InSize)
 	{
 		BaseNode = new Node[InSize];
-		Size = InSize;
+		Capacity = InSize;
+		Size = 0;
 	}
 
 	~Bucket()
 	{
 		delete[] BaseNode;
+		Capacity = 0;
 		Size = 0;
 	}
 };
