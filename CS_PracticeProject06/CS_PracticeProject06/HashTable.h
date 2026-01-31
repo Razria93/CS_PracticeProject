@@ -63,7 +63,7 @@ public:
 		}
 
 		size_t key = static_cast<size_t>(InValue);
-		size_t hashkey = HashFunction(key);
+		size_t hashkey = GetHash(key);
 
 		Node* targetNodeInBucket = BaseNode + hashkey;
 
@@ -135,7 +135,7 @@ public:
 		}
 
 		size_t key = static_cast<size_t>(InValue);
-		size_t hashkey = HashFunction(key);
+		size_t hashkey = GetHash(key);
 
 		Node* targetNodeInBucket = BaseNode + hashkey;
 
@@ -179,7 +179,7 @@ public:
 	}
 
 private:
-	size_t HashFunction(size_t InKey)
+	size_t GetHash(size_t InKey)
 	{
 		return InKey % Capacity;
 	}
