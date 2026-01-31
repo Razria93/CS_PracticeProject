@@ -1,6 +1,11 @@
 #include <iostream>
 #include "HashTable.h"
 
+void PrintContainResult(size_t InKey, bool InResult)
+{
+	printf("[%s/%s] %s: %s | key: %zd\n", "Note", "main", "IsContain", InResult ? "Contain" : "Not Contain", InKey);
+}
+
 void PrintFindResult(size_t InKey, int InValue, Node* InResult)
 {
 	printf("[%s/%s] %s: %s | key: %zd | value: %d\n", "Note", "main", "IsFind", InResult ? "Valid" : "InValid", InKey, InValue);
@@ -22,6 +27,18 @@ int main()
 	hashTable->Insert(3, 300);
 	hashTable->Insert(2, 300);
 	hashTable->Insert(2, 300);
+
+	printf("\n[Contain]\n");
+	bool contain0 = hashTable->Contain(0);
+	PrintContainResult(0, contain0);
+
+	printf("\n");
+	bool contain1 = hashTable->Contain(1);
+	PrintContainResult(1, contain1);
+
+	printf("\n");
+	bool contain2 = hashTable->Contain(2);
+	PrintContainResult(2, contain2);
 
 	printf("\n[Find]\n");
 	Node* find0 = hashTable->Find(3, 300);

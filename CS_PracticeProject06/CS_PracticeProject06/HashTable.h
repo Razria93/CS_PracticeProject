@@ -135,6 +135,60 @@ public:
 	}
 
 public:
+	bool Contain(size_t InKey)
+	{
+		// [Policy] No duplicates allowed
+
+		if (!BaseNode)
+		{
+			printf("[%s/%s] %s\n", "Error", "Contain", "BaseBucket is invalid.");
+			return false;
+		}
+
+		size_t hashkey = GetHash(InKey);
+
+		Node* targetNodeInBucket = BaseNode + hashkey;
+
+		/* Case01: targetNodeInBucket->bExist == false */
+		if (!targetNodeInBucket->bExist)
+		{
+			printf("[%s/%s] %s\n", "Failed", "Contain", "Invalid value in bucket.");
+			return false;
+		}
+
+		/* Case02: targetNodeInBucket->bExist == true */
+		Node* targetNode = targetNodeInBucket;
+		while (true)
+		{
+			if (targetNode->HashKey != hashkey)
+			{
+				printf("[%s/%s] %s\n", "Error", "Contain", "HashKey mismatch.");
+				return false;
+			}
+
+			if (targetNode->Key == InKey)
+			{
+				printf("[%s/%s] %s\n", "Complete", "Contain", "Contain complete.");
+				return targetNode;
+			}
+
+			if (!targetNode->NextNode)
+			{
+				printf("[%s/%s] %s\n", "Failed", "Contain", "Invalid next node.");
+				return false;
+			}
+			else
+			{
+				targetNode = targetNode->NextNode;
+				continue;
+			}
+		}
+
+		printf("[%s/%s] %s\n", "Failed", "Find", "Undefined.");
+		return false;
+	}
+
+public:
 	Node* Find(size_t InKey, int InValue)
 	{
 		// [Policy] No duplicates allowed
@@ -234,6 +288,18 @@ public:
 		}
 
 		return BaseBucket->Insert(InKey, InValue);
+	}
+
+public:
+	bool Contain(int InValue)
+	{
+		if (!BaseBucket)
+		{
+			printf("[%s/%s] %s\n", "Error", "Contain", "BaseBucket is InValid.");
+			return false;
+		}
+
+		return BaseBucket->Contain(InValue);
 	}
 
 public:
