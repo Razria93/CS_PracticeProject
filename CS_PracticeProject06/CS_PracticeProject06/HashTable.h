@@ -122,6 +122,67 @@ public:
 		printf("[%s/%s] %s\n", "Failed", "Insert", "Undefined");
 		return false;
 	}
+
+public:
+	Node* Find(int InValue)
+	{
+		// [Policy] No duplicates allowed (Set)
+
+		if (!BaseNode)
+		{
+			printf("[%s/%s] %s\n", "Error", "Find", "BaseBucket is invalid.");
+			return nullptr;
+		}
+
+		size_t key = static_cast<size_t>(InValue);
+		size_t hashkey = HashFunction(key);
+
+		Node* targetNodeInBucket = BaseNode + hashkey;
+
+		/* Case01: targetNodeInBucket->bExist == false */
+		if (!targetNodeInBucket->bExist)
+		{
+			printf("[%s/%s] %s\n", "Failed", "Find", "Invalid value in bucket");
+			return nullptr;
+		}
+
+		/* Case02: targetNodeInBucket->bExist == true */
+		Node* targetNode = targetNodeInBucket;
+		while (true)
+		{
+			if (targetNode->HashKey != hashkey)
+			{
+				printf("[%s/%s] %s\n", "Error", "Find", "HashKey mismatch.");
+				return nullptr;
+			}
+
+			if (targetNode->Value == InValue)
+			{
+				printf("[%s/%s] %s\n", "Complete", "Find", "Find complete.");
+				return targetNode;
+			}
+
+			if (!targetNode->NextNode)
+			{
+				printf("[%s/%s] %s\n", "Failed", "Find", "Invalid next node.");
+				return nullptr;
+			}
+			else
+			{
+				targetNode = targetNode->NextNode;
+				continue;
+			}
+		}
+
+		printf("[%s/%s] %s\n", "Failed", "Find", "Undefined");
+		return nullptr;
+	}
+
+private:
+	size_t HashFunction(size_t InKey)
+	{
+		return InKey % Capacity;
+	}
 };
 
 class HashTable
@@ -163,5 +224,17 @@ public:
 		}
 
 		return BaseBucket->Insert(InValue);
+	}
+
+public:
+	Node* Find(int InValue)
+	{
+		if (!BaseBucket)
+		{
+			printf("[%s/%s] %s\n", "Error", "Find", "BaseBucket is InValid.");
+			return nullptr;
+		}
+
+		return BaseBucket->Find(InValue);
 	}
 };
