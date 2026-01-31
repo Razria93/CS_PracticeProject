@@ -38,6 +38,7 @@ struct Bucket
 	Node* BaseNode;
 	size_t Capacity;
 	size_t Size;
+	float LoadFactor;
 
 public:
 	Bucket(size_t InSize)
@@ -45,6 +46,7 @@ public:
 		BaseNode = new Node[InSize];
 		Capacity = InSize;
 		Size = 0;
+		LoadFactor = 0.f;
 	}
 
 	~Bucket()
@@ -58,6 +60,12 @@ public:
 		Size = 0;
 		LoadFactor = 0.f;
 	}
+
+public:
+	bool IsEmpty() { return Size == 0; }
+	size_t GetSize() { return Size; }
+	size_t GetCapacity() { return Capacity; }
+	float GetLoadFactor() { return Capacity > 0 ? static_cast<float>(Size) / static_cast<float>(Capacity) : 0.f; }
 
 public:
 	bool Insert(size_t InKey, int InValue)
@@ -438,6 +446,12 @@ public:
 
 		BaseBucket = nullptr;
 	}
+
+public:
+	bool IsEmpty() { return BaseBucket ? BaseBucket->IsEmpty() : false; }
+	size_t GetSize() { return BaseBucket ? BaseBucket->GetSize() : 0; }
+	size_t GetCapacity() { return BaseBucket ? BaseBucket->GetCapacity() : 0; }
+	float GetLoadFactor() { return BaseBucket ? BaseBucket->GetLoadFactor() : 0.f; }
 
 public:
 	void Initialize(size_t InSize)

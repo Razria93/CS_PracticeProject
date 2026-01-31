@@ -80,6 +80,9 @@ int main()
 	// Node* find5 = hashTable->Find(11, 100);
 	// PrintFindResult(11, 100, find5);
 
+	float loadFactor = hashTable->GetLoadFactor();
+	printf("[%s/%s] %s: %f\n", "Note", "main", "LoadFactor", loadFactor);
+	
 	hashTable->Clear();
 
 	return 0;
