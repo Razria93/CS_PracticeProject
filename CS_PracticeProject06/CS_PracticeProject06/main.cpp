@@ -27,6 +27,7 @@ int main()
 	hashTable->Insert(3, 300);
 	hashTable->Insert(2, 300);
 	hashTable->Insert(2, 300);
+	hashTable->Insert(11, 100);
 
 	printf("\n[Contain]\n");
 	bool contain0 = hashTable->Contain(0);
@@ -51,6 +52,14 @@ int main()
 	printf("\n");
 	Node* find2 = hashTable->Find(1, 300);
 	PrintFindResult(1, 300, find2);
+
+	printf("\n");
+	Node* find3 = hashTable->Find(1, 100);
+	PrintFindResult(1, 100, find3);
+
+	printf("\n");
+	Node* find4 = hashTable->Find(11, 100);
+	PrintFindResult(11, 100, find4);
 
 	return 0;
 }

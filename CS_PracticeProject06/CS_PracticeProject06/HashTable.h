@@ -94,12 +94,7 @@ public:
 				return false;
 			}
 
-			if (targetNode->Key != InKey)
-			{
-				continue;
-			}
-
-			if (targetNode->Value == InValue)
+			if (targetNode->Key == InKey && targetNode->Value == InValue)
 			{
 				printf("[%s/%s] %s: <%zd, %d> | %s: %zd\n", "Failed", "Insert", "Duplicate entries are not allowed", InKey, InValue, "Size", Size);
 				return false;
@@ -220,7 +215,7 @@ public:
 				return nullptr;
 			}
 
-			if (targetNode->Value == InValue)
+			if (targetNode->Key == InKey && targetNode->Value == InValue)
 			{
 				printf("[%s/%s] %s\n", "Complete", "Find", "Find complete.");
 				return targetNode;
