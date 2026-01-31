@@ -71,7 +71,13 @@ public:
 public:
 	void Initialize(size_t InSize)
 	{
-		if (BaseBucket) return;
+		if (BaseBucket)
+		{
+			printf("[%s/%s] %s\n", "Error", "Initialize", "BaseBucket is already initialized.");
+			return;
+		}
+
 		BaseBucket = new Bucket(InSize);
+		printf("[%s/%s] %s\n", "Complete", "Initialize", "Initialize complete.");
 	}
 };
