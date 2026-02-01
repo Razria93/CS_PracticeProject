@@ -328,8 +328,8 @@ public:
 			}
 			else
 			{
-				targetNode = targetNode + 1;
 				++count;
+				targetNode = BaseNode + count;
 			}
 		}
 	}
@@ -431,20 +431,23 @@ class HashTable
 {
 public:
 	Bucket* BaseBucket; // == std::vector<Node>(InSize) && Chainning
+	float MaxLoadFactor;
 
 public:
 	HashTable()
 	{
 		BaseBucket = nullptr;
+		MaxLoadFactor = 0.f;
 	}
 
 	~HashTable()
 	{
 		Clear();
 
-		delete[] BaseBucket;
+		delete BaseBucket;
 
 		BaseBucket = nullptr;
+		MaxLoadFactor = 0.f;
 	}
 
 public:
@@ -454,7 +457,7 @@ public:
 	float GetLoadFactor() { return BaseBucket ? BaseBucket->GetLoadFactor() : 0.f; }
 
 public:
-	void Initialize(size_t InSize)
+	void Initialize()
 	{
 		if (BaseBucket)
 		{
@@ -462,8 +465,9 @@ public:
 			return;
 		}
 
-		BaseBucket = new Bucket(InSize);
-		printf("[%s/%s] %s\n", "Complete", "Initialize", "Initialize complete.");
+		BaseBucket = new Bucket(2);
+		MaxLoadFactor = 0.7f;
+		printf("[%s/%s] bucket: %s | max-loadfactor: $f\n", "Complete", "Initialize", "Initialize complete.", BaseBucket, MaxLoadFactor);
 	}
 
 public:
@@ -473,6 +477,11 @@ public:
 		{
 			printf("[%s/%s] %s\n", "Error", "Insert", "BaseBucket is InValid.");
 			return false;
+		}
+
+		if (BaseBucket->GetLoadFactor() > MaxLoadFactor)
+		{
+			Resize();
 		}
 
 		return BaseBucket->Insert(InKey, InValue);
@@ -515,6 +524,71 @@ public:
 	}
 
 public:
+	void Resize()
+	{
+		if (!BaseBucket)
+		{
+			printf("[%s/%s] %s\n", "Error", "Resize", "BaseBucket is InValid.");
+			return;
+		}
+
+		if (BaseBucket->GetLoadFactor() > MaxLoadFactor)
+		{
+			size_t nextSize = BaseBucket->GetCapacity() + 1;
+
+			while (true)
+			{
+				if (IsPrime(nextSize))
+				{
+					if (nextSize < BaseBucket->GetCapacity())
+					{
+						printf("[%s/%s] %s\n", "Error", "Resize", "New capacity is smaller than current capacity (Overflow).");
+						return;
+					}
+
+					printf("[%s/%s] %s | before: %zd | after: %zd\n", "Complete", "Resize", "Find next size.", BaseBucket->GetCapacity(), nextSize);
+					break;
+				}
+
+				++nextSize;
+				continue;
+			}
+
+			Bucket* newBucket = new Bucket(nextSize);
+
+			size_t count = 0;
+			Node* targetNode = BaseBucket->BaseNode;
+
+			while (count < BaseBucket->Capacity)
+			{
+				if (targetNode && targetNode->bExist)
+				{
+					newBucket->Insert(targetNode->Key, targetNode->Value);
+					targetNode = targetNode->NextNode;
+				}
+				else
+				{
+					++count;
+					targetNode = BaseBucket->BaseNode + count;
+
+					continue;
+				}
+			}
+
+			Bucket* oldBucket = BaseBucket;
+
+			BaseBucket = newBucket;
+			delete oldBucket;
+
+			printf("[%s/%s] %s | capacity: %zd | size: %zd | loadfactor: %f\n", "Complete", "Resize", "Resize complete.", BaseBucket->GetCapacity(), BaseBucket->GetSize(), BaseBucket->GetLoadFactor());
+			return;
+		}
+
+		printf("[%s/%s] %s | capacity: %zd | size: %zd | loadfactor: %f\n", "Note", "Resize", "Resizing not required.", BaseBucket->GetCapacity(), BaseBucket->GetSize(), BaseBucket->GetLoadFactor());
+		return;
+	}
+
+public:
 	void Clear()
 	{
 		if (!BaseBucket)
@@ -524,5 +598,22 @@ public:
 		}
 
 		BaseBucket->Clear();
+	}
+
+public:
+	bool IsPrime(size_t InSize)
+	{
+		// Detail: 
+
+		if (InSize <= 1) return false;
+		if (InSize <= 3) return true;	// 2, 3
+		if (InSize % 2 == 0 || InSize % 3 == 0) return false;
+
+		// Check 6k +/- 1 pattern 
+		for (size_t i = 5; i * i <= InSize; i += 6)
+		{
+			if (InSize % i == 0 || InSize % (i + 2) == 0) return false;
+		}
+		return true;
 	}
 };

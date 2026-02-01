@@ -24,7 +24,7 @@ void PrintRemoveResult(size_t InKey, int InValue, bool InResult)
 int main()
 {
 	HashTable* hashTable = new HashTable;
-	hashTable->Initialize(10);
+	hashTable->Initialize();
 
 	printf("\n[Insert]\n");
 	hashTable->Insert(1, 100);
@@ -66,23 +66,20 @@ int main()
 	Node* find4 = hashTable->Find(11, 100);
 	PrintFindResult(11, 100, find4);
 
-	// printf("\n[Remove]\n");
-	// bool remove0 = hashTable->Remove(2, 300);
-	// PrintRemoveResult(2, 300, remove0);
-	// 
-	// bool remove1 = hashTable->Remove(1, 100);
-	// PrintRemoveResult(1, 100, remove1);
-	// 
-	// bool remove2 = hashTable->Remove(4, 5000);
-	// PrintRemoveResult(4, 5000, remove2);
-	// 
-	// printf("\n[Find_Remove After]\n");
-	// Node* find5 = hashTable->Find(11, 100);
-	// PrintFindResult(11, 100, find5);
-
-	float loadFactor = hashTable->GetLoadFactor();
-	printf("[%s/%s] %s: %f\n", "Note", "main", "LoadFactor", loadFactor);
+	printf("\n[Remove]\n");
+	bool remove0 = hashTable->Remove(2, 300);
+	PrintRemoveResult(2, 300, remove0);
 	
+	bool remove1 = hashTable->Remove(1, 100);
+	PrintRemoveResult(1, 100, remove1);
+	
+	bool remove2 = hashTable->Remove(4, 5000);
+	PrintRemoveResult(4, 5000, remove2);
+	
+	printf("\n[Find_Remove After]\n");
+	Node* find5 = hashTable->Find(11, 100);
+	PrintFindResult(11, 100, find5);
+
 	hashTable->Clear();
 
 	return 0;
