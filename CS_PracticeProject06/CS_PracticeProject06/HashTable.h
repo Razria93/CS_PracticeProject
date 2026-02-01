@@ -467,7 +467,7 @@ public:
 
 		BaseBucket = new Bucket(2);
 		MaxLoadFactor = 0.7f;
-		printf("[%s/%s] bucket: %s | max-loadfactor: $f\n", "Complete", "Initialize", "Initialize complete.", BaseBucket, MaxLoadFactor);
+		printf("[%s/%s] %s | bucket: %p | max-loadfactor: %.2f\n", "Complete", "Initialize", "Initialize complete", (void*)BaseBucket, MaxLoadFactor);
 	}
 
 public:
