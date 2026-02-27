@@ -53,7 +53,15 @@ public:
 		++Size;
 	};
 
-	void pop() {};
+	void pop() 
+	{
+		if (empty())
+			std::cout << "[NOTE] pop is invalid (empty)." << '\n';
+
+		Base[Front] = NULL;
+		Front = (Front + 1) % Capacity;
+		--Size;
+	};
 	void clear() {};
 
 public:

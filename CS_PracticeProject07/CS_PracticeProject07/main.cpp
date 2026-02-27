@@ -19,5 +19,28 @@ int main()
 	queue->push(11);
 	queue->print();
 
+	std::cout << '\n';
+	std::cout << "[ ##### Pop Test ##### ]" << '\n';
+	queue->pop();
+	queue->print();
+
+	queue->pop();
+	queue->print();
+	
+	queue->pop();
+	queue->print();
+
+	queue->push(10);
+	queue->print();
+
+	queue->push(20);
+	queue->print();
+	
+	queue->push(30);
+	queue->print();
+	
+	queue->push(40);
+	queue->print();
+
 	return 0;
 }
