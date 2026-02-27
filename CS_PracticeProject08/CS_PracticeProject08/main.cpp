@@ -3,7 +3,7 @@
 
 int main()
 {
-	Heap* heap = new Heap();
+	MinHeap* minHeap = new MinHeap(10);
 
 	return 0;
 }
