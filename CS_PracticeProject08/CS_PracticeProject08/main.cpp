@@ -3,5 +3,7 @@
 
 int main()
 {
+	Heap* heap = new Heap();
+
 	return 0;
 }
