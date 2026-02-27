@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <climits>
 
 class MinHeap
 {
@@ -42,7 +44,7 @@ public:
 		++Size;
 
 		int invalue_idx = Size - 1;
-		int parent_idx = idx_parent(invalue_idx);
+		int parent_idx = get_parent(invalue_idx);
 
 		while (invalue_idx != parent_idx && InValue < Base[parent_idx])
 		{
@@ -50,7 +52,7 @@ public:
 			Base[parent_idx] = InValue;
 
 			invalue_idx = parent_idx;
-			parent_idx = idx_parent(invalue_idx);
+			parent_idx = get_parent(invalue_idx);
 		}
 	};
 
@@ -58,9 +60,9 @@ public:
 	void clear() {};
 
 private:
-	int idx_parent(int InValue) { return (InValue - 1) / 2; }
-	int idx_L_child(int InValue) { return InValue * 2 + 1; }
-	int idx_R_child(int InValue) { return InValue * 2 + 2; }
+	int get_parent(int InValue) { return (InValue - 1) / 2; }
+	int get_L_child(int InValue) { return InValue * 2 + 1; }
+	int get_R_child(int InValue) { return InValue * 2 + 2; }
 
 public:
 	void print()
