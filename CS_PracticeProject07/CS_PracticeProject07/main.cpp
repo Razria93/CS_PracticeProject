@@ -3,5 +3,7 @@
 
 int main()
 {
+	Queue* queue = new Queue(10);
+
 	return 0;
 }
