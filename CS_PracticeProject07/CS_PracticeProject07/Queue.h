@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Queue
 {
@@ -58,22 +59,27 @@ public:
 public:
 	void print()
 	{
+		std::cout << "=== Queue Print ===" << '\n';
+		
 		if (empty())
 			std::cout << "[NOTE] Queue is empty." << '\n';
-		
-		std::cout << '\n';
-		std::cout << "=== Queue Print ===" << '\n';
-		std::cout << "[Base Info]" << '\n';
-		std::cout << "- Capacity :" << Capacity << '\n';
-		std::cout << "- Size :" << Size << '\n';
-		std::cout << "- Front_idx :" << Front << '\n';
-		std::cout << "- Rear_idx :" << Rear << '\n';
-
-		std::cout << '\n';
-		std::cout << "[Idx and Value]" << '\n';
-		for (int i = 0; i < Capacity; ++i)
+		else
 		{
-			std::cout << "idx_" << i << ": " << Base[i] << '\n';
+			std::cout << '\n';
+			std::cout << "[Base Info]" << '\n';
+			std::cout << "- Capacity :" << Capacity << '\n';
+			std::cout << "- Size :" << Size << '\n';
+			std::cout << "- Front_idx :" << Front << '\n';
+			std::cout << "- Rear_idx :" << Rear << '\n';
+
+			std::cout << '\n';
+			std::cout << "[Idx and Value]" << '\n';
+			for (int i = 0; i < Capacity; ++i)
+			{
+				std::cout << "idx_" << i << ": " << Base[i] << '\n';
+			}
 		}
+
+		std::cout << "===================" << '\n';
 	}
 };

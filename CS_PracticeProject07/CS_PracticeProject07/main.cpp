@@ -5,7 +5,7 @@ int main()
 {
 	Queue* queue = new Queue(10);
 
-	std::cout << "[Push Test]" << '\n';
+	std::cout << "[ ##### Push Test ##### ]" << '\n';
 	queue->push(1);
 	queue->push(2);
 	queue->push(3);
