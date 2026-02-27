@@ -56,7 +56,51 @@ public:
 		}
 	};
 
-	void pop() {};
+	void pop()
+	{
+		if (empty())
+		{
+			std::cout << "[NOTE] pop is invalid (empty)." << '\n';
+			return;
+		}
+
+		int last_idx = Size - 1;
+		int invalue_idx = 0;
+		int target_idx = 0;
+		int L_chlid_idx = get_L_child(invalue_idx);
+		int R_chlid_idx = get_R_child(invalue_idx);
+
+		Base[0] = Base[last_idx];
+		Base[last_idx] = INT_MIN;
+		--Size;
+		--last_idx;
+
+		while (true)
+		{
+			if (last_idx < L_chlid_idx) break;
+
+			if (last_idx < R_chlid_idx)
+			{
+				// L_chlid_idx is valid but R_chlid_idx is invalid
+				target_idx = L_chlid_idx;
+			}
+			else // L_chlid_idx, R_chlid_idx is valid
+			{
+				target_idx = Base[L_chlid_idx] < Base[R_chlid_idx] ? L_chlid_idx : R_chlid_idx;
+			}
+
+			if (Base[invalue_idx] < Base[target_idx]) break;
+
+			int temp = Base[invalue_idx];
+			Base[invalue_idx] = Base[target_idx];
+			Base[target_idx] = temp;
+
+			invalue_idx = target_idx;
+			L_chlid_idx = get_L_child(invalue_idx);
+			R_chlid_idx = get_R_child(invalue_idx);
+		}
+	};
+
 	void clear() {};
 
 private:

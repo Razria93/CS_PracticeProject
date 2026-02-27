@@ -11,6 +11,11 @@ int main()
 
 	minHeap->print();
 
+	for (int i = 0; i < 10; ++i)
+	{
+		minHeap->pop();
+		minHeap->print();
+	}
 
 	return 0;
 }
