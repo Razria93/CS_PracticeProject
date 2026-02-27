@@ -42,7 +42,7 @@ public:
 public:
 	void push(int InValue)
 	{
-		if (full()) 
+		if (full())
 		{
 			std::cout << "[NOTE] push(" << InValue << ")" << " is invalid." << '\n';
 			return;
@@ -53,7 +53,7 @@ public:
 		++Size;
 	};
 
-	void pop() 
+	void pop()
 	{
 		if (empty())
 			std::cout << "[NOTE] pop is invalid (empty)." << '\n';
@@ -68,21 +68,20 @@ public:
 	void print()
 	{
 		std::cout << "=== Queue Print ===" << '\n';
+		std::cout << "[Base Info]" << '\n';
+		std::cout << "- Capacity :" << Capacity << '\n';
+		std::cout << "- Size :" << Size << '\n';
+		std::cout << "- Front_idx :" << Front << '\n';
+		std::cout << "- Rear_idx :" << Rear << '\n';
+
+		std::cout << '\n';
+		std::cout << "[Idx and Value]" << '\n';
 		
 		if (empty())
 			std::cout << "[NOTE] Queue is empty." << '\n';
 		else
 		{
-			std::cout << '\n';
-			std::cout << "[Base Info]" << '\n';
-			std::cout << "- Capacity :" << Capacity << '\n';
-			std::cout << "- Size :" << Size << '\n';
-			std::cout << "- Front_idx :" << Front << '\n';
-			std::cout << "- Rear_idx :" << Rear << '\n';
-
-			std::cout << '\n';
-			std::cout << "[Idx and Value]" << '\n';
-			for (int i = 0; i < Capacity; ++i)
+			for (size_t i = 0; i < Capacity; ++i)
 			{
 				std::cout << "idx_" << i << ": " << Base[i] << '\n';
 			}
