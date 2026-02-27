@@ -11,11 +11,18 @@ int main()
 
 	minHeap->print();
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		minHeap->pop();
-		minHeap->print();
 	}
+
+	minHeap->print();
+
+	std::cout << "[Test top()]" << '\n';
+	std::cout << "Top is [" << minHeap->top() << "] in MinHeap." << '\n';
+
+	minHeap->clear();
+	minHeap->print();
 
 	return 0;
 }

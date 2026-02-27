@@ -101,7 +101,15 @@ public:
 		}
 	};
 
-	void clear() {};
+	void clear()
+	{
+		for (size_t i = 0; i < Capacity; ++i)
+		{
+			Base[i] = INT_MIN;
+		}
+
+		Size = 0;
+	};
 
 private:
 	int get_parent(int InValue) { return (InValue - 1) / 2; }
