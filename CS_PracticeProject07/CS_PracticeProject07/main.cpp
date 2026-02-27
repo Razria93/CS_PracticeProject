@@ -42,5 +42,8 @@ int main()
 	queue->push(40);
 	queue->print();
 
+	queue->clear();
+	queue->print();
+
 	return 0;
 }

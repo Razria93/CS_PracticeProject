@@ -62,7 +62,18 @@ public:
 		Front = (Front + 1) % Capacity;
 		--Size;
 	};
-	void clear() {};
+	void clear()
+	{
+		for (size_t i = 0; i < Capacity; ++i)
+		{
+			Base[Rear] = NULL;
+		}
+
+		Size = 0;
+		Capacity = 0;
+		Front = 0;
+		Rear = 0;
+	};
 
 public:
 	void print()
