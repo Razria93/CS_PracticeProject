@@ -56,12 +56,16 @@ public:
 	void pop()
 	{
 		if (empty())
+		{
 			std::cout << "[NOTE] pop is invalid (empty)." << '\n';
+			return;
+		}
 
 		Base[Front] = NULL;
 		Front = (Front + 1) % Capacity;
 		--Size;
 	};
+
 	void clear()
 	{
 		for (size_t i = 0; i < Capacity; ++i)
@@ -70,7 +74,6 @@ public:
 		}
 
 		Size = 0;
-		Capacity = 0;
 		Front = 0;
 		Rear = 0;
 	};
